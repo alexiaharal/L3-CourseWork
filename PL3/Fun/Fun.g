@@ -1,0 +1,171 @@
+//////////////////////////////////////////////////////////////
+//
+// Specification of the Fun syntactic analyser.
+//
+// Developed June 2012 by David Watt (University of Glasgow).
+//
+//////////////////////////////////////////////////////////////
+
+
+grammar Fun;
+
+// This specifies the Fun syntactic analyser.
+// In detail, it specifies the syntax of Fun and the 
+// translation of Fun phrases to ASTs.
+
+
+options {
+	output = AST;
+	ASTLabelType = CommonTree;
+}
+
+tokens {        // special tokens for labeling AST nodes
+	PROG;
+	VAR;
+	FORMAL;
+	NOFORMAL;
+	IFELSE;
+	SEQ; 
+	PROCCALL;
+	FUNCCALL;
+	NOACTUAL;
+}
+
+
+// Programs
+
+program
+	:	var_decl* proc_decl+ EOF   -> ^(PROG 
+		                                var_decl*
+		                                proc_decl+)
+	;
+
+
+// Declarations
+
+proc_decl
+	:	PROC ID
+		  LPAR formal RPAR COLON
+		  var_decl* seq_com DOT    -> ^(PROC
+		                                ID formal 
+		                                var_decl* seq_com)
+	|	FUNC type ID
+		  LPAR formal RPAR COLON
+		  var_decl* seq_com
+		  RETURN expr DOT          -> ^(FUNC
+		                                type ID formal 
+		                                var_decl* seq_com
+		                                expr)
+	;
+
+formal
+	:	type ID                    -> ^(FORMAL type ID)
+	|	                           -> NOFORMAL
+	;
+
+var_decl
+	:	type ID ASSN expr          -> ^(VAR type ID expr)
+	;
+
+type
+	:	BOOL                       -> BOOL
+	|	INT                        -> INT
+	;
+
+
+// Commands
+
+com
+	:	ID ASSN expr               -> ^(ASSN ID expr)
+	|	ID LPAR actual RPAR        -> ^(PROCCALL
+							     ID actual)
+	|	IF expr COLON c1=seq_com
+		  ( DOT                    -> ^(IF expr $c1)
+		  | ELSE COLON
+		    c2=seq_com DOT         -> ^(IFELSE
+		                                expr $c1 $c2)
+		  )
+	|	WHILE expr COLON
+		  seq_com DOT              -> ^(WHILE expr seq_com)
+	|	FOR expr TO expr COLON
+			seq_com DOT			   -> ^(FOR expr expr seq_com)
+	;
+
+seq_com
+	:	com*                       -> ^(SEQ com*)
+	;
+
+
+// Expressions
+
+expr
+	:	sec_expr
+	// EXTENSION : Added ASSN^ below
+		  ( (EQ^ | LT^ | GT^ | ASSN^) sec_expr )?
+	;
+
+sec_expr
+	:	pri_expr
+		  ( (PLUS^ | MINUS^ | TIMES^ | DIV^) pri_expr )*
+	;
+
+pri_expr
+	:	FALSE                      -> FALSE
+	|	TRUE                       -> TRUE
+	|	NUM                        -> NUM
+	|	ID                         -> ID
+	|	ID LPAR actual RPAR        -> ^(FUNCCALL
+		                                ID actual)
+	|	NOT pri_expr               -> ^(NOT pri_expr)
+	|	LPAR expr RPAR             -> expr
+	;
+
+actual
+	:	expr                       -> expr
+	|	                           -> NOACTUAL
+	;
+
+
+// Lexicon
+// EXTENSION : Added 'FOR' token below
+BOOL	:	'bool' ;
+ELSE	:	'else' ;
+FALSE	:	'false' ;
+FUNC	:	'func' ;
+IF	:	'if' ;
+INT	:	'int' ;
+PROC	:	'proc' ;
+RETURN :	'return' ;
+TRUE	:	'true' ;
+WHILE	:	'while' ;
+FOR		:	'for';
+
+EQ	:	'==' ;
+LT	:	'<' ;
+GT	:	'>' ;
+PLUS	:	'+' ;
+MINUS	:	'-' ;
+TIMES	:	'*' ;
+DIV	:	'/' ;
+NOT	:	'not' ;
+
+ASSN	:	'=' ;
+	
+// EXTENSION : Added 'TO' token below
+LPAR	:	'(' ;
+RPAR	:	')' ;
+COLON	:	':' ;
+DOT	:	'.' ;
+TO	:	'to';
+
+NUM	:	DIGIT+ ;
+
+ID	:	LETTER (LETTER | DIGIT)* ;
+
+SPACE	:	(' ' | '\t')+             {skip();} ;
+EOL	:	'\r'? '\n'                {skip();} ;
+COMMENT :	'#' ~('\r' | '\n')*
+		  '\r'? '\n'              {skip();} ;
+
+fragment LETTER : 'a'..'z' | 'A'..'Z' ;
+fragment DIGIT  : '0'..'9' ;
