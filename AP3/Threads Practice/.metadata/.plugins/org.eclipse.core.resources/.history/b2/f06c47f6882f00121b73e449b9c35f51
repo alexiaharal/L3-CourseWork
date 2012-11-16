@@ -1,0 +1,16 @@
+public class TestRunnable implements Runnable{
+	public void run(){
+		System.out.println("In Thread");
+		try {
+			wait();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void main(String[] args){
+		Thread t=new Thread(new TestRunnable());
+		t.start();
+	}
+}
