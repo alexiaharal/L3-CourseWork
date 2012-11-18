@@ -35,9 +35,9 @@ public class ProducerConsumer {
 		for (int i=0; i<nconsumers; i++)
 			conss[i]=new Thread(new Consumer(i,bb));
 	//Start the consumers first, then the producers
-		for (int i=0;i<nproducers;i++)
+		for (int i=0;i<nconsumers;i++)
 			conss[i].start();
-		for (int i=0; i<nconsumers;i++)
+		for (int i=0; i<nproducers;i++)
 			prods[i].start();
 	//Now wait for the producers to finish
 		for (int i=0; i<nproducers; i++)

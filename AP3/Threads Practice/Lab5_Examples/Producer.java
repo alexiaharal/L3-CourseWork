@@ -11,7 +11,9 @@ public class Producer implements Runnable {
 	}
 
 	public void run() {
+		System.out.println(name+" has been started");
 		for (int i=0; i<nmsgs;i++)	{
+			System.out.println("Pushing in the message '"+name+": message "+i+"'");
 			String msg=new String(name+": message "+i);
 			bb.put(msg);
 		}
