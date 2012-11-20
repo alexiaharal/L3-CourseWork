@@ -212,7 +212,7 @@ public static void processDirectory( String name) {
 		for(String s:skeys){
 					for (String f:anotherStructure.get(s)){
 				tree.add(s+"/"+f);
-				System.out.println(s+"/"+f);
+				//System.out.println(s+"/"+f);
 
 			}}
 		Iterator it=tree.iterator();
