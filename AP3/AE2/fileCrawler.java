@@ -207,6 +207,7 @@ public static void processDirectory( String name) {
 			//	TreeMap tree=new TreeMap(anotherStructure);
 		Set<String> keys=anotherStructure.keySet();
 		String[] skeys=keys.toArray(new String[keys.size()]);
+		Arrays.sort(skeys);
 		TreeSet<String> tree=new TreeSet<String>();
 		for(String s:skeys){
 					for (String f:anotherStructure.get(s)){
