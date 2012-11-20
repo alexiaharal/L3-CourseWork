@@ -34,30 +34,37 @@ public class fileCrawler {
 			//main checks if "directory" is actually a directory and not a file
 			//before adding it to the WorkQueue
 			String directory;
-			LinkedList<String> list=new LinkedList<String>();
 			//System.out.println("Internal queue has element: " +queue.poll());
 			while ((directory = queue.poll()) != null) {
 				try{
 					File dir = new File(directory);//create a file object
 					String files[] = dir.list();
 					for (String temp: files){
-						File file=new File(temp);
-						if (file.isDirectory()){
+						//System.out.println("Continue"); 
+
+						String filePath=directory+"/"+temp;
+						//System.out.println("Directory "+directory+"+ temp "+temp+"="+filePath);
+						//System.out.println(filePath);
+						File entre=new File(filePath);
+						if (entre.isDirectory()){
+							//System.out.println(entre.getName()+" is a directory, skip");
 							continue;
-						}else{
-							if (matchRegex(pat,file.getName())){
+						}else if(entre.isFile()){
+						//	System.out.println("File "+entre.getName());
+							//System.out.println("in else");
+							if (matchRegex(pat,temp)){
 								if(anotherStructure.get(directory)==null){
 									LinkedList<String> filesList=new LinkedList<String>();
 									anotherStructure.put(directory,filesList);
 								}
-								list=anotherStructure.get(directory);
-								list.add(file.getName());
+								LinkedList<String>list=anotherStructure.get(directory);
+								list.add(temp);
 								anotherStructure.put(directory,list);
 								//otherStructure.put(file.getName(),list);
-								if (otherStructure.get(directory) == null) {
-									otherStructure.put(directory, list);
+
 							}
-						}
+					}else{
+						//System.out.println(filePath+" is not a file");
 					}
 					}}catch (Exception e){
 					System.err.println("Error processing file");
@@ -134,9 +141,11 @@ public class fileCrawler {
 	}
 
 public static void processDirectory( String name) {
+
 	try {
 		File file = new File(name); // create a File object
 		if (file.isDirectory()) { // a directory - could be symlink
+	//			System.out.println(name);
 			String entries[] = file.list();
 		if (entries != null) { // not a symlink
 			workQueue.add(name);
@@ -182,6 +191,16 @@ public static void processDirectory( String name) {
 					for (String f:anotherStructure.get(s)){
 				System.out.println(s+"/"+f);
 			}}
+
+
+
+
+
+
+
+
+
+
 		//SortedSet skeys=new SortedSet(keys);
 		/*Iterator it=keys.iterator();
 		while(it.hasNext()){
