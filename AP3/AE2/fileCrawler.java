@@ -39,6 +39,7 @@ public class fileCrawler {
 				try{
 					File dir = new File(directory);//create a file object
 					String files[] = dir.list();
+					Arrays.sort(files);
 					for (String temp: files){
 						//System.out.println("Continue"); 
 
@@ -178,19 +179,36 @@ public static void processDirectory( String name) {
 		processDirectory(directory);//Traverse directories and add them to workQueue
 		Thread t = new Thread(crawler.createWorker(pat,"t"));
 		t.start();
-		t.interrupt(); 
+
 		t.join(); 
+		Thread a = new Thread(crawler.createWorker(pat,"a"));
+		a.start(); 
+		a.join(); 
+		Thread b = new Thread(crawler.createWorker(pat,"b"));
+		b.start();
+		
+		b.join(); 
+		/*b.interrupt(); 
+				a.interrupt();
+				t.interrupt(); */
 		ConcurrentHashMap<String, LinkedList<String>> g = new ConcurrentHashMap<String, LinkedList<String>> ();
 	//	List<String> al = new ArrayList<String>(g.keySet());
 
-
+	//	TreeMap tree=new TreeMap(anotherStructure);
 		Set<String> keys=anotherStructure.keySet();
 		String[] skeys=keys.toArray(new String[keys.size()]);
 		Arrays.sort(skeys);
+		TreeSet<String> tree=new TreeSet<String>();
 		for(String s:skeys){
 					for (String f:anotherStructure.get(s)){
-				System.out.println(s+"/"+f);
+				tree.add(s+"/"+f);
+				//System.out.println(s+"/"+f);
+
 			}}
+		Iterator it=tree.iterator();
+		while(it.hasNext()){
+			System.out.println(it.next());
+		}
 
 
 
@@ -203,7 +221,7 @@ public static void processDirectory( String name) {
 
 		//SortedSet skeys=new SortedSet(keys);
 		/*Iterator it=keys.iterator();
-		while(it.hasNext()){
+
 			String key=(String)it.next();
 			LinkedList<String> filesList=anotherStructure.get(key);
 			for (String s:filesList){
