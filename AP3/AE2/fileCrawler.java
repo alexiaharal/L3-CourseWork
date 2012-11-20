@@ -68,7 +68,8 @@ public class fileCrawler {
 
 	public fileCrawler() {
 		workQueue = new LinkedBlockingQueue<String>();
-		anotherStructure = new ConcurrentHashMap<String, LinkedList<String>>();
+		anotherStructure=new ConcurrentHashMap<String, LinkedList<String>>();
+	//	anotherStructure = new ConcurrentHashMap<String, LinkedList<String>>();
 		lockObject = new Object();
 	}
 
@@ -168,15 +169,34 @@ public static void processDirectory( String name) {
 		processDirectory(directory);//Traverse directories and add them to workQueue
 		Thread t = new Thread(crawler.createWorker(pat,"t"));
 		t.start();
+		t.interrupt(); 
 		t.join(); 
+		ConcurrentHashMap<String, LinkedList<String>> g = new ConcurrentHashMap<String, LinkedList<String>> ();
+	//	List<String> al = new ArrayList<String>(g.keySet());
 
-    	Iterator it = anotherStructure.entrySet().iterator();
-    	while (it.hasNext()) {
-        	Map.Entry pairs = (Map.Entry)it.next();
-        	for (String s:pairs.getValue()){
-        	    System.out.println(pairs.getKey() + "/" + s);	
-        	}
 
+		Set<String> keys=anotherStructure.keySet();
+		String[] skeys=keys.toArray(new String[keys.size()]);
+		Arrays.sort(skeys);
+		for(String s:skeys){
+					for (String f:anotherStructure.get(s)){
+				System.out.println(s+"/"+f);
+			}}
+		//SortedSet skeys=new SortedSet(keys);
+		/*Iterator it=keys.iterator();
+		while(it.hasNext()){
+			String key=(String)it.next();
+			LinkedList<String> filesList=anotherStructure.get(key);
+			for (String s:filesList){
+				System.out.println(key+"/"+s);
+			}
+		}*/
+        	/*Map.Entry pairs = (Map.Entry)it.next();
+        	System.out.println(pairs.getKey());
+        	do{
+        		String file=(anotherStructure.get[pairs.getKey()].poll());
+        		System.out.println("/"+file);
+        	}while(file!=null);	
         	it.remove(); // avoids a ConcurrentModificationException
     }
 
