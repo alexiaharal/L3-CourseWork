@@ -7,7 +7,7 @@ public class fileCrawler {
 	// Using LinkedBlockingQueue to make it safe for threads to
 	// queue/dequeue elements concurrently
 	private static LinkedBlockingQueue<String> workQueue;
-	private ConcurrentHashMap<String, LinkedList<String>> anotherStructure;
+	private static ConcurrentHashMap<String, LinkedList<String>> anotherStructure;
 	private Object lockObject;
 
 	private class Worker implements Runnable {
@@ -37,7 +37,6 @@ public class fileCrawler {
 			LinkedList<String> list=new LinkedList<String>();
 			//System.out.println("Internal queue has element: " +queue.poll());
 			while ((directory = queue.poll()) != null) {
-							System.out.println("This is "+this.name+" ");
 				try{
 					File dir = new File(directory);//create a file object
 					String files[] = dir.list();
@@ -47,8 +46,13 @@ public class fileCrawler {
 							continue;
 						}else{
 							if (matchRegex(pat,file.getName())){
-								System.out.println(file.getName());
-								list.add(directory+"/"+file.getName());
+								if(anotherStructure.get(directory)==null){
+									LinkedList<String> filesList=new LinkedList<String>();
+									anotherStructure.put(directory,filesList);
+								}
+								list=anotherStructure.get(directory);
+								list.add(file.getName());
+								anotherStructure.put(directory,list);
 								//otherStructure.put(file.getName(),list);
 								if (otherStructure.get(directory) == null) {
 									otherStructure.put(directory, list);
@@ -161,13 +165,21 @@ public static void processDirectory( String name) {
 		Pattern pat = cvtPattern(Arg[0]);
 		// save given directory name into directory variable
 		directory = Arg[1];
-		processDirectory(directory);
+		processDirectory(directory);//Traverse directories and add them to workQueue
 		Thread t = new Thread(crawler.createWorker(pat,"t"));
-		Thread s = new Thread(crawler.createWorker(pat,"s"));
 		t.start();
-		s.start();
-		t.join();
-		s.join();
+		t.join(); 
+
+    	Iterator it = anotherStructure.entrySet().iterator();
+    	while (it.hasNext()) {
+        	Map.Entry pairs = (Map.Entry)it.next();
+        	for (String s:pairs.getValue()){
+        	    System.out.println(pairs.getKey() + "/" + s);	
+        	}
+
+        	it.remove(); // avoids a ConcurrentModificationException
+    }
+
 		//Iterator<String> it=
 		//
 		// obtain the number of threads
@@ -210,7 +222,6 @@ public static void processDirectory( String name) {
 		 * toProcess.add(obj); ic.printDependencies(seen, toProcess);
 		 * System.out.print("\n"); }
 		 */
-		System.out.println("This is now terminated");
 		System.exit(0);
 	}
 }
