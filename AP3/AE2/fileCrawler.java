@@ -16,25 +16,28 @@ public class fileCrawler {
 		private ConcurrentHashMap<String, LinkedList<String>> otherStructure;
 		private Object lockObject;
 		private Pattern pat;
-
-		public Worker(LinkedBlockingQueue<String> q,
+		private String name;
+		public Worker(String n,LinkedBlockingQueue<String> q,
 				ConcurrentHashMap<String, LinkedList<String>> s, Object lock,
 				Pattern p) {
 			queue = q;
 			otherStructure = new ConcurrentHashMap<String, LinkedList<String>>();
 			lockObject = lock;
 			pat = p;
+			name=n;
 		}
 
 		// Part of the code in Worker.run was taken from the example on the
 		// AE2 specification document section 7.
 		public void run() {
+
 			//main checks if "directory" is actually a directory and not a file
 			//before adding it to the WorkQueue
 			String directory;
 			LinkedList<String> list=new LinkedList<String>();
 			//System.out.println("Internal queue has element: " +queue.poll());
 			while ((directory = queue.poll()) != null) {
+							System.out.println("This is "+this.name+" ");
 				try{
 					File dir = new File(directory);//create a file object
 					String files[] = dir.list();
@@ -49,8 +52,6 @@ public class fileCrawler {
 								//otherStructure.put(file.getName(),list);
 								if (otherStructure.get(directory) == null) {
 									otherStructure.put(directory, list);
-							System.out.println("Path to matched:"+otherStructure.get(directory).getFirst());
-
 							}
 						}
 					}
@@ -67,8 +68,8 @@ public class fileCrawler {
 		lockObject = new Object();
 	}
 
-	public Worker createWorker(Pattern pattern) {
-		return new Worker(workQueue, anotherStructure, lockObject, pattern);
+	public Worker createWorker(Pattern pattern, String n) {
+		return new Worker(n, workQueue, anotherStructure, lockObject, pattern);
 	}
 
 	/*
@@ -161,9 +162,12 @@ public static void processDirectory( String name) {
 		// save given directory name into directory variable
 		directory = Arg[1];
 		processDirectory(directory);
-		Thread t = new Thread(crawler.createWorker(pat));
+		Thread t = new Thread(crawler.createWorker(pat,"t"));
+		Thread s = new Thread(crawler.createWorker(pat,"s"));
 		t.start();
+		s.start();
 		t.join();
+		s.join();
 		//Iterator<String> it=
 		//
 		// obtain the number of threads
