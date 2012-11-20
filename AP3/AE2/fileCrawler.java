@@ -16,8 +16,8 @@ public class fileCrawler {
 		private ConcurrentHashMap<String, LinkedList<String>> otherStructure;
 		private Object lockObject;
 		private Pattern pat;
-		private String name;
-		public Worker(String n,LinkedBlockingQueue<String> q,
+		private int name;
+		public Worker(int n,LinkedBlockingQueue<String> q,
 				ConcurrentHashMap<String, LinkedList<String>> s, Object lock,
 				Pattern p) {
 			queue = q;
@@ -80,8 +80,8 @@ public class fileCrawler {
 	//	anotherStructure = new ConcurrentHashMap<String, LinkedList<String>>();
 		lockObject = new Object();
 	}
-
-	public Worker createWorker(Pattern pattern, String n) {
+ 
+	public Worker createWorker(Pattern pattern, int n) {
 		return new Worker(n, workQueue, anotherStructure, lockObject, pattern);
 	}
 
@@ -97,7 +97,6 @@ public class fileCrawler {
 	 * 
 	 * assumes 'pattern' is large enough to hold the regular expression
 	 */
-
 	public static Pattern cvtPattern(String bashpat) {
 		StringBuilder pat = new StringBuilder();
 		int start, length;
@@ -142,7 +141,6 @@ public class fileCrawler {
 	}
 
 public static void processDirectory( String name) {
-
 	try {
 		File file = new File(name); // create a File object
 		if (file.isDirectory()) { // a directory - could be symlink
@@ -168,85 +166,58 @@ public static void processDirectory( String name) {
 		String directory = "";
 		String pattern = "";
 		fileCrawler crawler = new fileCrawler();
-		if (Arg.length < 2) {
+		if (Arg.length < 1) {
 			System.err.println("Usage: ./fileCrawler pattern [dir] ... ");
 			System.exit(1);
 		}
 		// convert and compile the given pattern to Java Regex Pattern
 		Pattern pat = cvtPattern(Arg[0]);
 		// save given directory name into directory variable
-		directory = Arg[1];
+		if(Arg.length==2){
+			directory = Arg[1];
+		}else{
+			directory=".";
+		}
 		processDirectory(directory);//Traverse directories and add them to workQueue
-		Thread t = new Thread(crawler.createWorker(pat,"t"));
-		t.start();
-
-		t.join(); 
-		Thread a = new Thread(crawler.createWorker(pat,"a"));
-		a.start(); 
-		a.join(); 
-		Thread b = new Thread(crawler.createWorker(pat,"b"));
-		b.start();
-		
-		b.join(); 
 		/*b.interrupt(); 
 				a.interrupt();
 				t.interrupt(); */
 		ConcurrentHashMap<String, LinkedList<String>> g = new ConcurrentHashMap<String, LinkedList<String>> ();
 	//	List<String> al = new ArrayList<String>(g.keySet());
 
-	//	TreeMap tree=new TreeMap(anotherStructure);
+
+		String envThreadsString = System.getenv("CRAWLER_THREADS"); 
+		Integer envThreadsInt;
+		if (envThreadsString == null) 
+			envThreadsInt = new Integer(2); 
+		else 
+			envThreadsInt = new Integer(envThreadsString);
+
+		Thread[] threads=new Thread[envThreadsInt];
+		for(int i=0;i<envThreadsInt; i++){
+			threads[i]= new Thread(crawler.createWorker(pat,i));
+			threads[i].start();
+
+		}
+		for(int i=0;i<envThreadsInt; i++){
+			threads[i].interrupt();
+			threads[i].join(); 
+		}
+
+			//	TreeMap tree=new TreeMap(anotherStructure);
 		Set<String> keys=anotherStructure.keySet();
 		String[] skeys=keys.toArray(new String[keys.size()]);
-		Arrays.sort(skeys);
 		TreeSet<String> tree=new TreeSet<String>();
 		for(String s:skeys){
 					for (String f:anotherStructure.get(s)){
 				tree.add(s+"/"+f);
-				//System.out.println(s+"/"+f);
+				System.out.println(s+"/"+f);
 
 			}}
 		Iterator it=tree.iterator();
 		while(it.hasNext()){
 			System.out.println(it.next());
 		}
-
-
-
-
-
-
-
-
-
-
-		//SortedSet skeys=new SortedSet(keys);
-		/*Iterator it=keys.iterator();
-
-			String key=(String)it.next();
-			LinkedList<String> filesList=anotherStructure.get(key);
-			for (String s:filesList){
-				System.out.println(key+"/"+s);
-			}
-		}*/
-        	/*Map.Entry pairs = (Map.Entry)it.next();
-        	System.out.println(pairs.getKey());
-        	do{
-        		String file=(anotherStructure.get[pairs.getKey()].poll());
-        		System.out.println("/"+file);
-        	}while(file!=null);	
-        	it.remove(); // avoids a ConcurrentModificationException
-    }
-
-		//Iterator<String> it=
-		//
-		// obtain the number of threads
-		//
-		/*
-		 * String thstring = System.getenv("CRAWLER_THREADS"); Integer nthreads;
-		 * if (thstring == null) nthreads = new Integer(2); else nthreads = new
-		 * Integer(thstring);
-		 */
-
 		//
 		// now place each directory into the workQ
 		//
