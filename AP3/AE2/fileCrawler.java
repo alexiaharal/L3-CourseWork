@@ -8,23 +8,18 @@ public class fileCrawler {
 	// queue/dequeue elements concurrently
 	private LinkedBlockingQueue<String> workQueue;
 	private ConcurrentHashMap<String, LinkedList<String>> anotherStructure;
-	private Object lockObject;
 
 	private class Worker implements Runnable {
 
 		private LinkedBlockingQueue<String> queue;
 		private ConcurrentHashMap<String, LinkedList<String>> otherStructure;
-		private Object lockObject;
 		private Pattern pat;
-		private int name;
-		public Worker(int n,LinkedBlockingQueue<String> q,
-				ConcurrentHashMap<String, LinkedList<String>> s, Object lock,
+		public Worker(LinkedBlockingQueue<String> q,
+				ConcurrentHashMap<String, LinkedList<String>> s,
 				Pattern p) {
 			queue = q;
 			otherStructure = s;
-			lockObject = lock;
 			pat = p;
-			name=n;
 		}
 
 		// Part of the code in Worker.run was taken from the example on the
@@ -41,11 +36,8 @@ public class fileCrawler {
 					String dirFiles[] = dir.list();
 					Arrays.sort(dirFiles);
 					for (String entry: dirFiles){
-						//System.out.println("Continue"); 
 
 						String filePath=directory+"/"+entry;
-						//System.out.println("Directory "+directory+"+ temp "+temp+"="+filePath);
-						//System.out.println(filePath);
 						File file=new File(filePath);
 						if (file.isDirectory()){
 							continue;//we are only interested at files so 
@@ -77,12 +69,10 @@ public class fileCrawler {
 	public fileCrawler() {
 		workQueue = new LinkedBlockingQueue<String>();
 		anotherStructure=new ConcurrentHashMap<String, LinkedList<String>>();
-	//	anotherStructure = new ConcurrentHashMap<String, LinkedList<String>>();
-		lockObject = new Object();
 	}
  
 	public Worker createWorker(Pattern pattern, int n) {
-		return new Worker(n, workQueue, anotherStructure, lockObject, pattern);
+		return new Worker(workQueue, anotherStructure, pattern);
 	}
 
 	/*
@@ -131,6 +121,8 @@ public class fileCrawler {
 		return p;
 	}
 
+//matchRegex returns true if filaname matches given regExpression or
+//false otherwise.
 	private static boolean matchRegex(Pattern regExpression, String filename) {
 		Matcher m = regExpression.matcher(filename);
 		if (m.matches()) {
@@ -226,38 +218,6 @@ public static void processDirectory( String name,LinkedBlockingQueue<String> wor
 		while(it.hasNext()){
 			System.out.println(it.next());
 		}
-		//
-		// now place each directory into the workQ
-		//
-		/*
-		 * LinkedList<String> objects = new LinkedList<String>(); for (int i =
-		 * fileStart; i < Arg.length; i++) { int ndx = Arg[i].lastIndexOf('.');
-		 * String root, ext, obj; if (ndx == -1) { root = new String(Arg[i]);
-		 * ext = new String(""); } else { root = Arg[i].substring(0, ndx); ext =
-		 * Arg[i].substring(ndx + 1); } if (ext.compareTo("c") != 0 &&
-		 * ext.compareTo("y") != 0 && ext.compareTo("l") != 0) {
-		 * System.err.println("File arguments must end in .c, .y, or .l: " +
-		 * Arg[i]); System.exit(1); } obj = root + ".o"; objects.add(obj);
-		 * LinkedList<String> ll = new LinkedList<String>(); ll.add(Arg[i]);
-		 * ic.theTable.put(obj, ll); try { ic.workQ.put(Arg[i]); } catch
-		 * (Exception e) { } ; ll = new LinkedList<String>();
-		 * ic.theTable.put(Arg[i], ll); }
-		 * 
-		 * // // now process each file in the workQ // int N =
-		 * nthreads.intValue(); ArrayList<Thread> thread = new
-		 * ArrayList<Thread>(N); for (int i = 0; i < N; i++) { Thread t = new
-		 * Thread(ic.createWorker()); thread.add(t); t.start(); } for (int i =
-		 * 0; i < N; i++) try { thread.get(i).join(); } catch (Exception e) { }
-		 * ; //
-		 * 
-		 * // // now print dependencies on System.out // Iterator<String> it =
-		 * objects.iterator(); while (it.hasNext()) { LinkedList<String>
-		 * toProcess = new LinkedList<String>(); String obj = it.next();
-		 * System.out.print(obj + ":"); HashMap<String, Integer> seen = new
-		 * HashMap<String, Integer>(); seen.put(obj, new Integer(1));
-		 * toProcess.add(obj); ic.printDependencies(seen, toProcess);
-		 * System.out.print("\n"); }
-		 */
 		System.exit(0);
 	}
 }
