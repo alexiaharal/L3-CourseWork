@@ -205,16 +205,23 @@ public static void processDirectory( String name,LinkedBlockingQueue<String> wor
 		}
 
 			//	TreeMap tree=new TreeMap(anotherStructure);
-		Set<String> keys=crawler.anotherStructure.keySet();
-		String[] skeys=keys.toArray(new String[keys.size()]);
+		//Set<String> keys=crawler.anotherStructure.keySet();
+		//String[] skeys=keys.toArray(new String[keys.size()]);
 		//Arrays.sort(skeys);
+	//	Iterator hashIt=anotherStructure.iterator()
 		TreeSet<String> tree=new TreeSet<String>();
-		for(String s:skeys){
-					for (String f:crawler.anotherStructure.get(s)){
-				tree.add(s+"/"+f);
+		for (String key : crawler.anotherStructure.keySet()){
+			Iterator listIt=crawler.anotherStructure.get(key).iterator();
+			while(listIt.hasNext()){
+				tree.add(key+"/"+crawler.anotherStructure.get(key).poll());			
+			}
+
+		} 
+					//for (String f:crawler.anotherStructure.get(s)){
+				//tree.add(s+"/"+f);
 				//System.out.println(s+"/"+f);
 
-			}}
+		
 		Iterator it=tree.iterator();
 		while(it.hasNext()){
 			System.out.println(it.next());
