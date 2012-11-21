@@ -54,7 +54,7 @@ public class fileCrawler {
 						//	System.out.println("File "+entre.getName());
 							//System.out.println("in else");
 							if (matchRegex(pat,temp)){
-								if(anotherStructure.get(directory)==null){
+								if(otherStructure.get(directory)==null){
 									LinkedList<String> filesList=new LinkedList<String>();
 									otherStructure.put(directory,filesList);
 								}
