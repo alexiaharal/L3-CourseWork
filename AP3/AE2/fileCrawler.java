@@ -6,8 +6,8 @@ import java.io.*;
 public class fileCrawler {
 	// Using LinkedBlockingQueue to make it safe for threads to
 	// queue/dequeue elements concurrently
-	private static LinkedBlockingQueue<String> workQueue;
-	private static ConcurrentHashMap<String, LinkedList<String>> anotherStructure;
+	private LinkedBlockingQueue<String> workQueue;
+	private ConcurrentHashMap<String, LinkedList<String>> anotherStructure;
 	private Object lockObject;
 
 	private class Worker implements Runnable {
@@ -21,7 +21,7 @@ public class fileCrawler {
 				ConcurrentHashMap<String, LinkedList<String>> s, Object lock,
 				Pattern p) {
 			queue = q;
-			otherStructure = new ConcurrentHashMap<String, LinkedList<String>>();
+			otherStructure = s;
 			lockObject = lock;
 			pat = p;
 			name=n;
@@ -56,11 +56,11 @@ public class fileCrawler {
 							if (matchRegex(pat,temp)){
 								if(anotherStructure.get(directory)==null){
 									LinkedList<String> filesList=new LinkedList<String>();
-									anotherStructure.put(directory,filesList);
+									otherStructure.put(directory,filesList);
 								}
-								LinkedList<String>list=anotherStructure.get(directory);
+								LinkedList<String>list=otherStructure.get(directory);
 								list.add(temp);
-								anotherStructure.put(directory,list);
+								otherStructure.put(directory,list);
 								//otherStructure.put(file.getName(),list);
 
 							}
@@ -140,20 +140,22 @@ public class fileCrawler {
 		}
 	}
 
-public static void processDirectory( String name) {
+
+public static void processDirectory( String name,LinkedBlockingQueue<String> work) {
+	LinkedBlockingQueue<String> q=work;
 	try {
 		File file = new File(name); // create a File object
 		if (file.isDirectory()) { // a directory - could be symlink
 	//			System.out.println(name);
 			String entries[] = file.list();
 		if (entries != null) { // not a symlink
-			workQueue.add(name);
+			q.add((String)name);
 			for (String entry : entries ) {
 			if (entry.compareTo(".") == 0)
 				continue;
 			if (entry.compareTo("..") == 0)
 				continue;
-			processDirectory(name+"/"+entry);
+			processDirectory(new String(name+"/"+entry),q);
 			}
 		}
 		}
@@ -178,11 +180,7 @@ public static void processDirectory( String name) {
 		}else{
 			directory=".";
 		}
-		processDirectory(directory);//Traverse directories and add them to workQueue
-		/*b.interrupt(); 
-				a.interrupt();
-				t.interrupt(); */
-		ConcurrentHashMap<String, LinkedList<String>> g = new ConcurrentHashMap<String, LinkedList<String>> ();
+		processDirectory(directory, crawler.workQueue);//Traverse directories and add them to workQueue/
 	//	List<String> al = new ArrayList<String>(g.keySet());
 
 
@@ -200,17 +198,19 @@ public static void processDirectory( String name) {
 
 		}
 		for(int i=0;i<envThreadsInt; i++){
+			try{
+				threads[i].join(); 
+			}catch(Exception e){};
 			threads[i].interrupt();
-			threads[i].join(); 
 		}
 
 			//	TreeMap tree=new TreeMap(anotherStructure);
-		Set<String> keys=anotherStructure.keySet();
+		Set<String> keys=crawler.anotherStructure.keySet();
 		String[] skeys=keys.toArray(new String[keys.size()]);
-		Arrays.sort(skeys);
+		//Arrays.sort(skeys);
 		TreeSet<String> tree=new TreeSet<String>();
 		for(String s:skeys){
-					for (String f:anotherStructure.get(s)){
+					for (String f:crawler.anotherStructure.get(s)){
 				tree.add(s+"/"+f);
 				//System.out.println(s+"/"+f);
 
