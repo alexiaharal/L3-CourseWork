@@ -36,12 +36,12 @@ public class fileCrawler {
 					String dirFiles[] = dir.list();
 					Arrays.sort(dirFiles);
 					for (String entry: dirFiles){
+
 						String filePath=directory+"/"+entry;
 						File file=new File(filePath);
 						if (file.isDirectory()){
-//if a directory is found add it to the workQueue so that a worker can pick it up and inspect it.
-							queue.add(filePath);	
-							continue;
+							continue;//we are only interested at files so 
+									//ignore any directories.
 						}else {
 							//Check if the name of this file matches
 							//given pattern.
@@ -172,9 +172,9 @@ public static void processDirectory( String name,LinkedBlockingQueue<String> wor
 		}else{
 			directory=".";
 		}
+		processDirectory(directory, crawler.workQueue);//Traverse directories and add them to workQueue/
+	//	List<String> al = new ArrayList<String>(g.keySet());
 
-	//not used anymore:	processDirectory(directory, crawler.workQueue);
-		crawler.workQueue.add(directory);
 
 		String envThreadsString = System.getenv("CRAWLER_THREADS"); 
 		Integer envThreadsInt;
