@@ -38,34 +38,34 @@ public class fileCrawler {
 			while ((directory = queue.poll()) != null) {
 				try{
 					File dir = new File(directory);//create a file object
-					String files[] = dir.list();
-					Arrays.sort(files);
-					for (String temp: files){
+					String dirFiles[] = dir.list();
+					Arrays.sort(dirFiles);
+					for (String entry: dirFiles){
 						//System.out.println("Continue"); 
 
-						String filePath=directory+"/"+temp;
+						String filePath=directory+"/"+entry;
 						//System.out.println("Directory "+directory+"+ temp "+temp+"="+filePath);
 						//System.out.println(filePath);
-						File entre=new File(filePath);
-						if (entre.isDirectory()){
-							//System.out.println(entre.getName()+" is a directory, skip");
-							continue;
-						}else if(entre.isFile()){
-						//	System.out.println("File "+entre.getName());
-							//System.out.println("in else");
-							if (matchRegex(pat,temp)){
+						File file=new File(filePath);
+						if (file.isDirectory()){
+							continue;//we are only interested at files so 
+									//ignore any directories.
+						}else {
+							//Check if the name of this file matches
+							//given pattern.
+							if (matchRegex(pat,entry)){
+								//if it matches then add it to the hashMap
+								//that holds all found files under their
+								//directories.
 								if(otherStructure.get(directory)==null){
 									LinkedList<String> filesList=new LinkedList<String>();
 									otherStructure.put(directory,filesList);
 								}
-								LinkedList<String>list=otherStructure.get(directory);
-								list.add(temp);
-								otherStructure.put(directory,list);
+								LinkedList<String>filesList=otherStructure.get(directory);
+								filesList.add(entry);
+								otherStructure.put(directory,filesList);
 								//otherStructure.put(file.getName(),list);
-
 							}
-					}else{
-						//System.out.println(filePath+" is not a file");
 					}
 					}}catch (Exception e){
 					System.err.println("Error processing file");
