@@ -9,77 +9,81 @@ public class fileCrawler {
 	private LinkedBlockingQueue<String> workQueue;
 	private ConcurrentHashMap<String, LinkedList<String>> anotherStructure;
 
-	private class Worker implements Runnable {
+	public fileCrawler() {
+		workQueue = new LinkedBlockingQueue<String>();
+		anotherStructure = new ConcurrentHashMap<String, LinkedList<String>>();
+	}
 
+	public Worker createWorker(Pattern pattern, int n) {
+		return new Worker(workQueue, anotherStructure, pattern);
+	}
+
+	// Worker thread
+	private class Worker implements Runnable {
 		private LinkedBlockingQueue<String> queue;
 		private ConcurrentHashMap<String, LinkedList<String>> otherStructure;
 		private Pattern pat;
+
 		public Worker(LinkedBlockingQueue<String> q,
-				ConcurrentHashMap<String, LinkedList<String>> s,
-				Pattern p) {
+				ConcurrentHashMap<String, LinkedList<String>> s, Pattern p) {
 			queue = q;
 			otherStructure = s;
 			pat = p;
 		}
 
-		// Part of the code in Worker.run was taken from the example on the
-		// AE2 specification document section 7.
 		public void run() {
-
-			//main checks if "directory" is actually a directory and not a file
-			//before adding it to the WorkQueue
 			String directory;
-			//System.out.println("Internal queue has element: " +queue.poll());
-			while ((directory = queue.poll()) != null) {
-				try{
-					File dir = new File(directory);//create a file object
-					String dirFiles[] = dir.list();
-					Arrays.sort(dirFiles);
-					for (String entry: dirFiles){
-						String filePath=directory+"/"+entry;
-						File file=new File(filePath);
-						if (file.isDirectory()){
-//if a directory is found add it to the workQueue so that a worker can pick it up and inspect it.
-			if (entry.compareTo(".") == 0)
-				continue;
-			if (entry.compareTo("..") == 0)
-				continue;
-							queue.add(filePath);	
+			// If work queue is empty and interrupt signal was sent, stop the
+			// thread.
+			// if work queue is empty but the thread is not interrupted continue
+			// running. There are still elements to be added to the work queue.
+			while ((directory = queue.poll()) != null || !Thread.interrupted()) {
+				if (directory == null) {
+					continue;
+				} else {
+					try {
+						File dir = new File(directory);
+						String dirFiles[] = dir.list();
+						for (String entry : dirFiles) {
 
-							continue;
-						}else {
-							//Check if the name of this file matches
-							//given pattern.
-							if (matchRegex(pat,entry)){
-								//if it matches then add it to the hashMap
-								//that holds all found files under their
-								//directories.
-								if(otherStructure.get(directory)==null){
-									LinkedList<String> filesList=new LinkedList<String>();
-									otherStructure.put(directory,filesList);
+							String filePath = directory + "/" + entry;
+							File file = new File(filePath);
+							if (file.isDirectory()) {
+								continue;// we are only interested at files so
+											// ignore any directories.
+							} else {
+								// Check if the name of this file matches
+								// given pattern.
+								if (matchRegex(pat, entry)) {
+									// if it matches then add it to the hashMap
+									// that holds all found files under their
+									// directories.
+									if (otherStructure.get(directory) == null) {
+										LinkedList<String> filesList = new LinkedList<String>();
+										otherStructure
+												.put(directory, filesList);
+									}
+									LinkedList<String> filesList = otherStructure
+											.get(directory);
+									filesList.add(entry);
+									otherStructure.put(directory, filesList);
+									// otherStructure.put(file.getName(),list);
 								}
-								LinkedList<String>filesList=otherStructure.get(directory);
-								filesList.add(entry);
-								otherStructure.put(directory,filesList);
-								//otherStructure.put(file.getName(),list);
 							}
+						}
+					} catch (Exception e) {
+						System.err.println("Error processing file");
 					}
-					}}catch (Exception e){
-					System.err.println("Error processing file");
-				}}
-		
-			
-			}}
+				}
+			}
 
-	public fileCrawler() {
-		workQueue = new LinkedBlockingQueue<String>();
-		anotherStructure=new ConcurrentHashMap<String, LinkedList<String>>();
-	}
- 
-	public Worker createWorker(Pattern pattern, int n) {
-		return new Worker(workQueue, anotherStructure, pattern);
+		}
 	}
 
+	/*
+	 *  ***Method cvtPattern was extracted from the AE2 specification document
+	 * section 6***
+	 */
 	/*
 	 * routine to convert bash pattern to regex pattern
 	 * 
@@ -126,8 +130,8 @@ public class fileCrawler {
 		return p;
 	}
 
-//matchRegex returns true if filaname matches given regExpression or
-//false otherwise.
+	// matchRegex returns true if filename matches given regExpression or
+	// false otherwise.
 	private static boolean matchRegex(Pattern regExpression, String filename) {
 		Matcher m = regExpression.matcher(filename);
 		if (m.matches()) {
@@ -137,35 +141,42 @@ public class fileCrawler {
 		}
 	}
 
+	/*
+	 * The code in processDirectory method is a modified version of the
+	 * processDirectory version from the AE2 specification document section 7
+	 */
 
-public static void processDirectory( String name,LinkedBlockingQueue<String> work) {
-	LinkedBlockingQueue<String> q=work;
-	try {
-		File file = new File(name); // create a File object
-		if (file.isDirectory()) { // a directory - could be symlink
-	//			System.out.println(name);
-			String entries[] = file.list();
-		if (entries != null) { // not a symlink
-			q.add((String)name);
-			for (String entry : entries ) {
-			if (entry.compareTo(".") == 0)
-				continue;
-			if (entry.compareTo("..") == 0)
-				continue;
-
-			processDirectory(new String(name+"/"+entry),q);
+	public static boolean processDirectory(String name,
+			LinkedBlockingQueue<String> work) {
+		LinkedBlockingQueue<String> q = work;
+		try {
+			File file = new File(name); // create a File object
+			if (file.isDirectory()) { // a directory - could be symlink
+				// System.out.println(name);
+				String entries[] = file.list();
+				if (entries != null) { // not a symlink
+					q.add((String) name);
+					for (String entry : entries) {
+						if (entry.compareTo(".") == 0)
+							continue;
+						if (entry.compareTo("..") == 0)
+							continue;
+						processDirectory(new String(name + "/" + entry), q);
+					}
+				}
 			}
+		} catch (Exception e) {
+			System.err.println("Error processing " + name + ": " + e);
 		}
-		}
-	} catch (Exception e) {
-		System.err.println("Error processing "+name+": "+e);
+		return true;
+
 	}
 
-}
 	public static void main(String Arg[]) throws Exception {
 		String directory = "";
 		String pattern = "";
 		fileCrawler crawler = new fileCrawler();
+		// If user provides less than 1 argument print error and exit
 		if (Arg.length < 1) {
 			System.err.println("Usage: ./fileCrawler pattern [dir] ... ");
 			System.exit(1);
@@ -173,57 +184,64 @@ public static void processDirectory( String name,LinkedBlockingQueue<String> wor
 		// convert and compile the given pattern to Java Regex Pattern
 		Pattern pat = cvtPattern(Arg[0]);
 		// save given directory name into directory variable
-		if(Arg.length==2){
+		if (Arg.length == 2) {
 			directory = Arg[1];
-		}else{
-			directory=".";
+		} else {// if a directory was not specified by the user
+			directory = ".";
 		}
+		// get environment variable "CRAWLER_THREADS"
+		String envThreads = System.getenv("CRAWLER_THREADS");
+		Integer numThreads;
+		if (envThreads == null)
+			// if CRAWLER_THREADS is not set, set number of threads to 2
+			numThreads = new Integer(2);
+		else
+			numThreads = new Integer(envThreads);
 
-	//not used anymore:	processDirectory(directory, crawler.workQueue);
-		crawler.workQueue.add(directory);
-
-		String envThreadsString = System.getenv("CRAWLER_THREADS"); 
-		Integer envThreadsInt;
-		if (envThreadsString == null) 
-			envThreadsInt = new Integer(2); 
-		else 
-			envThreadsInt = new Integer(envThreadsString);
-
-		Thread[] threads=new Thread[envThreadsInt];
-		for(int i=0;i<envThreadsInt; i++){
-			threads[i]= new Thread(crawler.createWorker(pat,i));
+		// Create and start workers
+		Thread[] threads = new Thread[numThreads];
+		for (int i = 0; i < numThreads; i++) {
+			threads[i] = new Thread(crawler.createWorker(pat, i));
 			threads[i].start();
 
 		}
-		for(int i=0;i<envThreadsInt; i++){
-			try{
-				threads[i].join(); 
-			}catch(Exception e){};
+		processDirectory(directory, crawler.workQueue);// Traverse directories
+														// and add them to
+														// workQueue/
+		// Main thread is no done adding directories
+		// to workQueue. Send interrupt signal to let the
+		// threads know.
+		for (int i = 0; i < numThreads; i++) {
 			threads[i].interrupt();
 		}
 
-			//	TreeMap tree=new TreeMap(anotherStructure);
-		//Set<String> keys=crawler.anotherStructure.keySet();
-		//String[] skeys=keys.toArray(new String[keys.size()]);
-		//Arrays.sort(skeys);
-	//	Iterator hashIt=anotherStructure.iterator()
-		TreeSet<String> tree=new TreeSet<String>();
-		for (String key : crawler.anotherStructure.keySet()){
-			Iterator listIt=crawler.anotherStructure.get(key).iterator();
-			while(listIt.hasNext()){
-				tree.add(key+"/"+crawler.anotherStructure.get(key).poll());			
+		// Now wait for threads to finish their work.
+		for (int i = 0; i < numThreads; i++) {
+			try {
+				threads[i].join();
+			} catch (Exception e) {
+			}
+			;
+		}
+
+		// I added all the matched files from the ConcurrentHashMap to the TreeSet
+		// which resulted in a sorted TreeSet.
+		TreeSet<String> tree = new TreeSet<String>();
+		for (String key : crawler.anotherStructure.keySet()) {
+			Iterator listIt = crawler.anotherStructure.get(key).iterator();
+			while (listIt.hasNext()) {
+				tree.add(key + "/" + crawler.anotherStructure.get(key).poll());
 			}
 
-		} 
-					//for (String f:crawler.anotherStructure.get(s)){
-				//tree.add(s+"/"+f);
-				//System.out.println(s+"/"+f);
-
-		
-		Iterator it=tree.iterator();
-		while(it.hasNext()){
-			System.out.println(it.next());
 		}
+
+		//Iterate over all the elements in the TreeSet and print them.
+		Iterator it = tree.iterator();
+		if (tree.isEmpty())
+			System.out.println("Unable to create iterator over tree set");
+		else{while (it.hasNext()) {
+			System.out.println(it.next());
+		}}
 		System.exit(0);
 	}
 }
