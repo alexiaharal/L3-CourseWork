@@ -40,7 +40,12 @@ public class fileCrawler {
 						File file=new File(filePath);
 						if (file.isDirectory()){
 //if a directory is found add it to the workQueue so that a worker can pick it up and inspect it.
+			if (entry.compareTo(".") == 0)
+				continue;
+			if (entry.compareTo("..") == 0)
+				continue;
 							queue.add(filePath);	
+
 							continue;
 						}else {
 							//Check if the name of this file matches
@@ -147,6 +152,7 @@ public static void processDirectory( String name,LinkedBlockingQueue<String> wor
 				continue;
 			if (entry.compareTo("..") == 0)
 				continue;
+
 			processDirectory(new String(name+"/"+entry),q);
 			}
 		}
