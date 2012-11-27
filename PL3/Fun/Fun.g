@@ -87,8 +87,10 @@ com
 		  )
 	|	WHILE expr COLON
 		  seq_com DOT              -> ^(WHILE expr seq_com)
-	|	FOR expr TO expr COLON
-			seq_com DOT			   -> ^(FOR expr expr seq_com)
+	|	FOR ID ASSN e1=expr TO
+			e2=expr COLON seq_com
+			DOT					   -> ^(FOR ID $e1 $e2 seq_com)
+
 	;
 
 seq_com
@@ -100,8 +102,7 @@ seq_com
 
 expr
 	:	sec_expr
-	// EXTENSION : Added ASSN^ below
-		  ( (EQ^ | LT^ | GT^ | ASSN^) sec_expr )?
+		  ( (EQ^ | LT^ | GT^ ) sec_expr )?
 	;
 
 sec_expr
