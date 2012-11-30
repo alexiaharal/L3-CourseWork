@@ -217,16 +217,29 @@ com
 				  }
 				}
 			expr
-				{int varaddr2= obj.currentOffset();
-				 obj.emit1(SVM.CMPGT);
-				 obj.emit12(SVM.JUMPT, 0);
-				 obj.emit12(SVM.LOADLIT, 1);
-				 obj.emit12(SVM.LOADG, varaddr.offset);
-				 obj.emit1(SVM.ADD);
-				 obj.emit12(SVM.STOREG,varaddr2);
+				{int varaddr2=obj.currentOffset();
+				obj.emit12(SVM.STOREG, varaddr2);
+				 int startaddr = obj.currentOffset();
+
+
+
+
+
+				 
 
 				}
 			com)
+				{obj.emit12(SVM.LOADLIT, 1);
+				 obj.emit12(SVM.LOADG, varaddr.offset);
+				 obj.emit1(SVM.ADD);
+				 obj.emit12(SVM.STOREG,varaddr.offset);
+
+				 obj.emit12(SVM.LOADG, varaddr.offset);
+				 obj.emit12(SVM.LOADG, varaddr2 );
+				 obj.emit1(SVM.CMPGT);
+				 obj.emit12(SVM.JUMPF, startaddr);
+
+				 }
 	|	^(SEQ com*)
 	;
 
