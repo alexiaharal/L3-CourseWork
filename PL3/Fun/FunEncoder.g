@@ -201,6 +201,32 @@ com
 				  int exitaddr = obj.currentOffset();
 				  obj.patch12(condaddr, exitaddr);
 				}
+	|	^(FOR
+			ID
+			expr
+				{ String id = $ID.text;
+				  Address varaddr = addrTable.get(id);
+				  switch (varaddr.locale) {
+				    case Address.GLOBAL:
+				      obj.emit12(SVM.STOREG,
+				        varaddr.offset);
+				      break;
+				    case Address.LOCAL:
+				      obj.emit12(SVM.STOREL,
+				        varaddr.offset);
+				  }
+				}
+			expr
+				{int varaddr2= obj.currentOffset();
+				 obj.emit1(SVM.CMPGT);
+				 obj.emit12(SVM.JUMPT, 0);
+				 obj.emit12(SVM.LOADLIT, 1);
+				 obj.emit12(SVM.LOADG, varaddr.offset);
+				 obj.emit1(SVM.ADD);
+				 obj.emit12(SVM.STOREG,varaddr2);
+
+				}
+			com)
 	|	^(SEQ com*)
 	;
 

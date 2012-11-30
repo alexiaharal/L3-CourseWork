@@ -1,4 +1,4 @@
-// $ANTLR 3.4 .\\FunChecker.g 2012-11-08 23:38:18
+// $ANTLR 3.4 FunChecker.g 2012-11-30 02:49:23
 
 import org.antlr.runtime.*;
 import org.antlr.runtime.tree.*;
@@ -71,7 +71,7 @@ public class FunChecker extends TreeParser {
     }
 
     public String[] getTokenNames() { return FunChecker.tokenNames; }
-    public String getGrammarFileName() { return ".\\FunChecker.g"; }
+    public String getGrammarFileName() { return "FunChecker.g"; }
 
 
 
@@ -204,20 +204,20 @@ public class FunChecker extends TreeParser {
 
 
     // $ANTLR start "program"
-    // .\\FunChecker.g:156:1: program : ^( PROG ( var_decl )* ( proc_decl )+ ) ;
+    // FunChecker.g:156:1: program : ^( PROG ( var_decl )* ( proc_decl )+ ) ;
     public final void program() throws RecognitionException {
         CommonTree PROG1=null;
 
         try {
-            // .\\FunChecker.g:157:2: ( ^( PROG ( var_decl )* ( proc_decl )+ ) )
-            // .\\FunChecker.g:157:4: ^( PROG ( var_decl )* ( proc_decl )+ )
+            // FunChecker.g:157:2: ( ^( PROG ( var_decl )* ( proc_decl )+ ) )
+            // FunChecker.g:157:4: ^( PROG ( var_decl )* ( proc_decl )+ )
             {
             PROG1=(CommonTree)match(input,PROG,FOLLOW_PROG_in_program60); 
 
              predefine(); 
 
             match(input, Token.DOWN, null); 
-            // .\\FunChecker.g:159:5: ( var_decl )*
+            // FunChecker.g:159:5: ( var_decl )*
             loop1:
             do {
                 int alt1=2;
@@ -230,7 +230,7 @@ public class FunChecker extends TreeParser {
 
                 switch (alt1) {
             	case 1 :
-            	    // .\\FunChecker.g:159:5: var_decl
+            	    // FunChecker.g:159:5: var_decl
             	    {
             	    pushFollow(FOLLOW_var_decl_in_program72);
             	    var_decl();
@@ -247,7 +247,7 @@ public class FunChecker extends TreeParser {
             } while (true);
 
 
-            // .\\FunChecker.g:160:5: ( proc_decl )+
+            // FunChecker.g:160:5: ( proc_decl )+
             int cnt2=0;
             loop2:
             do {
@@ -261,7 +261,7 @@ public class FunChecker extends TreeParser {
 
                 switch (alt2) {
             	case 1 :
-            	    // .\\FunChecker.g:160:5: proc_decl
+            	    // FunChecker.g:160:5: proc_decl
             	    {
             	    pushFollow(FOLLOW_proc_decl_in_program79);
             	    proc_decl();
@@ -307,7 +307,7 @@ public class FunChecker extends TreeParser {
 
 
     // $ANTLR start "proc_decl"
-    // .\\FunChecker.g:169:1: proc_decl : ( ^( PROC ID t= formal ( var_decl )* com ) | ^( FUNC t1= type ID t2= formal ( var_decl )* com t3= expr ) );
+    // FunChecker.g:169:1: proc_decl : ( ^( PROC ID t= formal ( var_decl )* com ) | ^( FUNC t1= type ID t2= formal ( var_decl )* com t3= expr ) );
     public final void proc_decl() throws RecognitionException {
         CommonTree ID2=null;
         CommonTree PROC3=null;
@@ -323,7 +323,7 @@ public class FunChecker extends TreeParser {
 
 
         try {
-            // .\\FunChecker.g:170:2: ( ^( PROC ID t= formal ( var_decl )* com ) | ^( FUNC t1= type ID t2= formal ( var_decl )* com t3= expr ) )
+            // FunChecker.g:170:2: ( ^( PROC ID t= formal ( var_decl )* com ) | ^( FUNC t1= type ID t2= formal ( var_decl )* com t3= expr ) )
             int alt5=2;
             int LA5_0 = input.LA(1);
 
@@ -342,7 +342,7 @@ public class FunChecker extends TreeParser {
             }
             switch (alt5) {
                 case 1 :
-                    // .\\FunChecker.g:170:4: ^( PROC ID t= formal ( var_decl )* com )
+                    // FunChecker.g:170:4: ^( PROC ID t= formal ( var_decl )* com )
                     {
                     PROC3=(CommonTree)match(input,PROC,FOLLOW_PROC_in_proc_decl102); 
 
@@ -364,7 +364,7 @@ public class FunChecker extends TreeParser {
                     				  // ... to enable recursion
                     				
 
-                    // .\\FunChecker.g:180:5: ( var_decl )*
+                    // FunChecker.g:180:5: ( var_decl )*
                     loop3:
                     do {
                         int alt3=2;
@@ -377,7 +377,7 @@ public class FunChecker extends TreeParser {
 
                         switch (alt3) {
                     	case 1 :
-                    	    // .\\FunChecker.g:180:5: var_decl
+                    	    // FunChecker.g:180:5: var_decl
                     	    {
                     	    pushFollow(FOLLOW_var_decl_in_proc_decl134);
                     	    var_decl();
@@ -412,7 +412,7 @@ public class FunChecker extends TreeParser {
                     }
                     break;
                 case 2 :
-                    // .\\FunChecker.g:187:4: ^( FUNC t1= type ID t2= formal ( var_decl )* com t3= expr )
+                    // FunChecker.g:187:4: ^( FUNC t1= type ID t2= formal ( var_decl )* com t3= expr )
                     {
                     FUNC5=(CommonTree)match(input,FUNC,FOLLOW_FUNC_in_proc_decl154); 
 
@@ -440,7 +440,7 @@ public class FunChecker extends TreeParser {
                     				  // ... to enable recursion
                     				
 
-                    // .\\FunChecker.g:198:5: ( var_decl )*
+                    // FunChecker.g:198:5: ( var_decl )*
                     loop4:
                     do {
                         int alt4=2;
@@ -453,7 +453,7 @@ public class FunChecker extends TreeParser {
 
                         switch (alt4) {
                     	case 1 :
-                    	    // .\\FunChecker.g:198:5: var_decl
+                    	    // FunChecker.g:198:5: var_decl
                     	    {
                     	    pushFollow(FOLLOW_var_decl_in_proc_decl194);
                     	    var_decl();
@@ -510,7 +510,7 @@ public class FunChecker extends TreeParser {
 
 
     // $ANTLR start "formal"
-    // .\\FunChecker.g:207:1: formal returns [Type type] : ( ^( FORMAL t= type ID ) | NOFORMAL );
+    // FunChecker.g:207:1: formal returns [Type type] : ( ^( FORMAL t= type ID ) | NOFORMAL );
     public final Type formal() throws RecognitionException {
         Type type = null;
 
@@ -521,7 +521,7 @@ public class FunChecker extends TreeParser {
 
 
         try {
-            // .\\FunChecker.g:208:2: ( ^( FORMAL t= type ID ) | NOFORMAL )
+            // FunChecker.g:208:2: ( ^( FORMAL t= type ID ) | NOFORMAL )
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -540,7 +540,7 @@ public class FunChecker extends TreeParser {
             }
             switch (alt6) {
                 case 1 :
-                    // .\\FunChecker.g:208:4: ^( FORMAL t= type ID )
+                    // FunChecker.g:208:4: ^( FORMAL t= type ID )
                     {
                     FORMAL7=(CommonTree)match(input,FORMAL,FOLLOW_FORMAL_in_formal234); 
 
@@ -563,7 +563,7 @@ public class FunChecker extends TreeParser {
                     }
                     break;
                 case 2 :
-                    // .\\FunChecker.g:212:4: NOFORMAL
+                    // FunChecker.g:212:4: NOFORMAL
                     {
                     match(input,NOFORMAL,FOLLOW_NOFORMAL_in_formal252); 
 
@@ -589,7 +589,7 @@ public class FunChecker extends TreeParser {
 
 
     // $ANTLR start "var_decl"
-    // .\\FunChecker.g:216:1: var_decl : ^( VAR t1= type ID t2= expr ) ;
+    // FunChecker.g:216:1: var_decl : ^( VAR t1= type ID t2= expr ) ;
     public final void var_decl() throws RecognitionException {
         CommonTree ID8=null;
         CommonTree VAR9=null;
@@ -599,8 +599,8 @@ public class FunChecker extends TreeParser {
 
 
         try {
-            // .\\FunChecker.g:217:2: ( ^( VAR t1= type ID t2= expr ) )
-            // .\\FunChecker.g:217:4: ^( VAR t1= type ID t2= expr )
+            // FunChecker.g:217:2: ( ^( VAR t1= type ID t2= expr ) )
+            // FunChecker.g:217:4: ^( VAR t1= type ID t2= expr )
             {
             VAR9=(CommonTree)match(input,VAR,FOLLOW_VAR_in_var_decl270); 
 
@@ -644,13 +644,13 @@ public class FunChecker extends TreeParser {
 
 
     // $ANTLR start "type"
-    // .\\FunChecker.g:223:1: type returns [Type type] : ( BOOL | INT );
+    // FunChecker.g:223:1: type returns [Type type] : ( BOOL | INT );
     public final Type type() throws RecognitionException {
         Type type = null;
 
 
         try {
-            // .\\FunChecker.g:224:2: ( BOOL | INT )
+            // FunChecker.g:224:2: ( BOOL | INT )
             int alt7=2;
             int LA7_0 = input.LA(1);
 
@@ -669,7 +669,7 @@ public class FunChecker extends TreeParser {
             }
             switch (alt7) {
                 case 1 :
-                    // .\\FunChecker.g:224:4: BOOL
+                    // FunChecker.g:224:4: BOOL
                     {
                     match(input,BOOL,FOLLOW_BOOL_in_type305); 
 
@@ -678,7 +678,7 @@ public class FunChecker extends TreeParser {
                     }
                     break;
                 case 2 :
-                    // .\\FunChecker.g:225:4: INT
+                    // FunChecker.g:225:4: INT
                     {
                     match(input,INT,FOLLOW_INT_in_type313); 
 
@@ -704,7 +704,7 @@ public class FunChecker extends TreeParser {
 
 
     // $ANTLR start "com"
-    // .\\FunChecker.g:231:1: com : ( ^( ASSN ID t= expr ) | ^( PROCCALL ID t= expr ) | ^( IF t= expr com ) | ^( IFELSE t= expr com com ) | ^( WHILE t= expr com ) | ^( SEQ ( com )* ) );
+    // FunChecker.g:231:1: com : ( ^( ASSN ID t= expr ) | ^( PROCCALL ID t= expr ) | ^( IF t= expr com ) | ^( IFELSE t= expr com com ) | ^( WHILE t= expr com ) | ^( FOR ID ASSN t= expr TO s= expr com ) | ^( SEQ ( com )* ) );
     public final void com() throws RecognitionException {
         CommonTree ID10=null;
         CommonTree ASSN11=null;
@@ -713,12 +713,15 @@ public class FunChecker extends TreeParser {
         CommonTree IF14=null;
         CommonTree IFELSE15=null;
         CommonTree WHILE16=null;
+        CommonTree FOR17=null;
         Type t =null;
+
+        Type s =null;
 
 
         try {
-            // .\\FunChecker.g:232:2: ( ^( ASSN ID t= expr ) | ^( PROCCALL ID t= expr ) | ^( IF t= expr com ) | ^( IFELSE t= expr com com ) | ^( WHILE t= expr com ) | ^( SEQ ( com )* ) )
-            int alt9=6;
+            // FunChecker.g:232:2: ( ^( ASSN ID t= expr ) | ^( PROCCALL ID t= expr ) | ^( IF t= expr com ) | ^( IFELSE t= expr com com ) | ^( WHILE t= expr com ) | ^( FOR ID ASSN t= expr TO s= expr com ) | ^( SEQ ( com )* ) )
+            int alt9=7;
             switch ( input.LA(1) ) {
             case ASSN:
                 {
@@ -745,9 +748,14 @@ public class FunChecker extends TreeParser {
                 alt9=5;
                 }
                 break;
-            case SEQ:
+            case FOR:
                 {
                 alt9=6;
+                }
+                break;
+            case SEQ:
+                {
+                alt9=7;
                 }
                 break;
             default:
@@ -760,7 +768,7 @@ public class FunChecker extends TreeParser {
 
             switch (alt9) {
                 case 1 :
-                    // .\\FunChecker.g:232:4: ^( ASSN ID t= expr )
+                    // FunChecker.g:232:4: ^( ASSN ID t= expr )
                     {
                     ASSN11=(CommonTree)match(input,ASSN,FOLLOW_ASSN_in_com331); 
 
@@ -784,7 +792,7 @@ public class FunChecker extends TreeParser {
                     }
                     break;
                 case 2 :
-                    // .\\FunChecker.g:237:4: ^( PROCCALL ID t= expr )
+                    // FunChecker.g:237:4: ^( PROCCALL ID t= expr )
                     {
                     PROCCALL13=(CommonTree)match(input,PROCCALL,FOLLOW_PROCCALL_in_com350); 
 
@@ -811,7 +819,7 @@ public class FunChecker extends TreeParser {
                     }
                     break;
                 case 3 :
-                    // .\\FunChecker.g:245:4: ^( IF t= expr com )
+                    // FunChecker.g:245:4: ^( IF t= expr com )
                     {
                     IF14=(CommonTree)match(input,IF,FOLLOW_IF_in_com369); 
 
@@ -837,7 +845,7 @@ public class FunChecker extends TreeParser {
                     }
                     break;
                 case 4 :
-                    // .\\FunChecker.g:248:4: ^( IFELSE t= expr com com )
+                    // FunChecker.g:248:4: ^( IFELSE t= expr com com )
                     {
                     IFELSE15=(CommonTree)match(input,IFELSE,FOLLOW_IFELSE_in_com388); 
 
@@ -869,7 +877,7 @@ public class FunChecker extends TreeParser {
                     }
                     break;
                 case 5 :
-                    // .\\FunChecker.g:251:4: ^( WHILE t= expr com )
+                    // FunChecker.g:251:4: ^( WHILE t= expr com )
                     {
                     WHILE16=(CommonTree)match(input,WHILE,FOLLOW_WHILE_in_com409); 
 
@@ -895,28 +903,67 @@ public class FunChecker extends TreeParser {
                     }
                     break;
                 case 6 :
-                    // .\\FunChecker.g:254:4: ^( SEQ ( com )* )
+                    // FunChecker.g:254:4: ^( FOR ID ASSN t= expr TO s= expr com )
                     {
-                    match(input,SEQ,FOLLOW_SEQ_in_com428); 
+                    FOR17=(CommonTree)match(input,FOR,FOLLOW_FOR_in_com428); 
+
+                    match(input, Token.DOWN, null); 
+                    match(input,ID,FOLLOW_ID_in_com430); 
+
+                    match(input,ASSN,FOLLOW_ASSN_in_com432); 
+
+                    pushFollow(FOLLOW_expr_in_com436);
+                    t=expr();
+
+                    state._fsp--;
+
+
+                    match(input,TO,FOLLOW_TO_in_com438); 
+
+                    pushFollow(FOLLOW_expr_in_com442);
+                    s=expr();
+
+                    state._fsp--;
+
+
+                    pushFollow(FOLLOW_com_in_com444);
+                    com();
+
+                    state._fsp--;
+
+
+                    match(input, Token.UP, null); 
+
+
+                     	checkType(Type.INT, t, FOR17);
+                    					checkType(Type.INT, s, FOR17);
+                    				
+
+                    }
+                    break;
+                case 7 :
+                    // FunChecker.g:258:4: ^( SEQ ( com )* )
+                    {
+                    match(input,SEQ,FOLLOW_SEQ_in_com457); 
 
                     if ( input.LA(1)==Token.DOWN ) {
                         match(input, Token.DOWN, null); 
-                        // .\\FunChecker.g:254:10: ( com )*
+                        // FunChecker.g:258:10: ( com )*
                         loop8:
                         do {
                             int alt8=2;
                             int LA8_0 = input.LA(1);
 
-                            if ( (LA8_0==ASSN||(LA8_0 >= IF && LA8_0 <= IFELSE)||LA8_0==PROCCALL||LA8_0==SEQ||LA8_0==WHILE) ) {
+                            if ( (LA8_0==ASSN||LA8_0==FOR||(LA8_0 >= IF && LA8_0 <= IFELSE)||LA8_0==PROCCALL||LA8_0==SEQ||LA8_0==WHILE) ) {
                                 alt8=1;
                             }
 
 
                             switch (alt8) {
                         	case 1 :
-                        	    // .\\FunChecker.g:254:10: com
+                        	    // FunChecker.g:258:10: com
                         	    {
-                        	    pushFollow(FOLLOW_com_in_com430);
+                        	    pushFollow(FOLLOW_com_in_com459);
                         	    com();
 
                         	    state._fsp--;
@@ -955,22 +1002,22 @@ public class FunChecker extends TreeParser {
 
 
     // $ANTLR start "expr"
-    // .\\FunChecker.g:260:1: expr returns [Type type] : ( FALSE | TRUE | NUM | ID | ^( FUNCCALL ID t= expr ) | ^( EQ t1= expr t2= expr ) | ^( LT t1= expr t2= expr ) | ^( GT t1= expr t2= expr ) | ^( PLUS t1= expr t2= expr ) | ^( MINUS t1= expr t2= expr ) | ^( TIMES t1= expr t2= expr ) | ^( DIV t1= expr t2= expr ) | ^( NOT t= expr ) | NOACTUAL );
+    // FunChecker.g:264:1: expr returns [Type type] : ( FALSE | TRUE | NUM | ID | ^( FUNCCALL ID t= expr ) | ^( EQ t1= expr t2= expr ) | ^( LT t1= expr t2= expr ) | ^( GT t1= expr t2= expr ) | ^( PLUS t1= expr t2= expr ) | ^( MINUS t1= expr t2= expr ) | ^( TIMES t1= expr t2= expr ) | ^( DIV t1= expr t2= expr ) | ^( NOT t= expr ) | NOACTUAL );
     public final Type expr() throws RecognitionException {
         Type type = null;
 
 
-        CommonTree ID17=null;
         CommonTree ID18=null;
-        CommonTree FUNCCALL19=null;
-        CommonTree EQ20=null;
-        CommonTree LT21=null;
-        CommonTree GT22=null;
-        CommonTree PLUS23=null;
-        CommonTree MINUS24=null;
-        CommonTree TIMES25=null;
-        CommonTree DIV26=null;
-        CommonTree NOT27=null;
+        CommonTree ID19=null;
+        CommonTree FUNCCALL20=null;
+        CommonTree EQ21=null;
+        CommonTree LT22=null;
+        CommonTree GT23=null;
+        CommonTree PLUS24=null;
+        CommonTree MINUS25=null;
+        CommonTree TIMES26=null;
+        CommonTree DIV27=null;
+        CommonTree NOT28=null;
         Type t =null;
 
         Type t1 =null;
@@ -979,7 +1026,7 @@ public class FunChecker extends TreeParser {
 
 
         try {
-            // .\\FunChecker.g:261:2: ( FALSE | TRUE | NUM | ID | ^( FUNCCALL ID t= expr ) | ^( EQ t1= expr t2= expr ) | ^( LT t1= expr t2= expr ) | ^( GT t1= expr t2= expr ) | ^( PLUS t1= expr t2= expr ) | ^( MINUS t1= expr t2= expr ) | ^( TIMES t1= expr t2= expr ) | ^( DIV t1= expr t2= expr ) | ^( NOT t= expr ) | NOACTUAL )
+            // FunChecker.g:265:2: ( FALSE | TRUE | NUM | ID | ^( FUNCCALL ID t= expr ) | ^( EQ t1= expr t2= expr ) | ^( LT t1= expr t2= expr ) | ^( GT t1= expr t2= expr ) | ^( PLUS t1= expr t2= expr ) | ^( MINUS t1= expr t2= expr ) | ^( TIMES t1= expr t2= expr ) | ^( DIV t1= expr t2= expr ) | ^( NOT t= expr ) | NOACTUAL )
             int alt10=14;
             switch ( input.LA(1) ) {
             case FALSE:
@@ -1062,51 +1109,51 @@ public class FunChecker extends TreeParser {
 
             switch (alt10) {
                 case 1 :
-                    // .\\FunChecker.g:261:4: FALSE
+                    // FunChecker.g:265:4: FALSE
                     {
-                    match(input,FALSE,FOLLOW_FALSE_in_expr453); 
+                    match(input,FALSE,FOLLOW_FALSE_in_expr482); 
 
                      type = Type.BOOL; 
 
                     }
                     break;
                 case 2 :
-                    // .\\FunChecker.g:263:4: TRUE
+                    // FunChecker.g:267:4: TRUE
                     {
-                    match(input,TRUE,FOLLOW_TRUE_in_expr464); 
+                    match(input,TRUE,FOLLOW_TRUE_in_expr493); 
 
                      type = Type.BOOL; 
 
                     }
                     break;
                 case 3 :
-                    // .\\FunChecker.g:265:4: NUM
+                    // FunChecker.g:269:4: NUM
                     {
-                    match(input,NUM,FOLLOW_NUM_in_expr475); 
+                    match(input,NUM,FOLLOW_NUM_in_expr504); 
 
                      type = Type.INT; 
 
                     }
                     break;
                 case 4 :
-                    // .\\FunChecker.g:267:4: ID
+                    // FunChecker.g:271:4: ID
                     {
-                    ID17=(CommonTree)match(input,ID,FOLLOW_ID_in_expr486); 
+                    ID18=(CommonTree)match(input,ID,FOLLOW_ID_in_expr515); 
 
-                     type = retrieve((ID17!=null?ID17.getText():null), ID17);
+                     type = retrieve((ID18!=null?ID18.getText():null), ID18);
                     				
 
                     }
                     break;
                 case 5 :
-                    // .\\FunChecker.g:270:4: ^( FUNCCALL ID t= expr )
+                    // FunChecker.g:274:4: ^( FUNCCALL ID t= expr )
                     {
-                    FUNCCALL19=(CommonTree)match(input,FUNCCALL,FOLLOW_FUNCCALL_in_expr498); 
+                    FUNCCALL20=(CommonTree)match(input,FUNCCALL,FOLLOW_FUNCCALL_in_expr527); 
 
                     match(input, Token.DOWN, null); 
-                    ID18=(CommonTree)match(input,ID,FOLLOW_ID_in_expr500); 
+                    ID19=(CommonTree)match(input,ID,FOLLOW_ID_in_expr529); 
 
-                    pushFollow(FOLLOW_expr_in_expr504);
+                    pushFollow(FOLLOW_expr_in_expr533);
                     t=expr();
 
                     state._fsp--;
@@ -1116,29 +1163,29 @@ public class FunChecker extends TreeParser {
 
 
                      Type result = checkCall(
-                    				    (ID18!=null?ID18.getText():null), t, FUNCCALL19);
+                    				    (ID19!=null?ID19.getText():null), t, FUNCCALL20);
                     				  if (result.equiv(Type.VOID))
                     				    reportError(
                     					 "procedure should be non-void",
-                    				      FUNCCALL19);
+                    				      FUNCCALL20);
                     				  type = result;
                     				
 
                     }
                     break;
                 case 6 :
-                    // .\\FunChecker.g:279:4: ^( EQ t1= expr t2= expr )
+                    // FunChecker.g:283:4: ^( EQ t1= expr t2= expr )
                     {
-                    EQ20=(CommonTree)match(input,EQ,FOLLOW_EQ_in_expr517); 
+                    EQ21=(CommonTree)match(input,EQ,FOLLOW_EQ_in_expr546); 
 
                     match(input, Token.DOWN, null); 
-                    pushFollow(FOLLOW_expr_in_expr521);
+                    pushFollow(FOLLOW_expr_in_expr550);
                     t1=expr();
 
                     state._fsp--;
 
 
-                    pushFollow(FOLLOW_expr_in_expr525);
+                    pushFollow(FOLLOW_expr_in_expr554);
                     t2=expr();
 
                     state._fsp--;
@@ -1148,23 +1195,23 @@ public class FunChecker extends TreeParser {
 
 
                      type = checkBinary(
-                    				    COMPTYPE, t1, t2, EQ20); 
+                    				    COMPTYPE, t1, t2, EQ21); 
 
                     }
                     break;
                 case 7 :
-                    // .\\FunChecker.g:282:4: ^( LT t1= expr t2= expr )
+                    // FunChecker.g:286:4: ^( LT t1= expr t2= expr )
                     {
-                    LT21=(CommonTree)match(input,LT,FOLLOW_LT_in_expr538); 
+                    LT22=(CommonTree)match(input,LT,FOLLOW_LT_in_expr567); 
 
                     match(input, Token.DOWN, null); 
-                    pushFollow(FOLLOW_expr_in_expr542);
+                    pushFollow(FOLLOW_expr_in_expr571);
                     t1=expr();
 
                     state._fsp--;
 
 
-                    pushFollow(FOLLOW_expr_in_expr546);
+                    pushFollow(FOLLOW_expr_in_expr575);
                     t2=expr();
 
                     state._fsp--;
@@ -1174,23 +1221,23 @@ public class FunChecker extends TreeParser {
 
 
                      type = checkBinary(
-                    				    COMPTYPE, t1, t2, LT21); 
+                    				    COMPTYPE, t1, t2, LT22); 
 
                     }
                     break;
                 case 8 :
-                    // .\\FunChecker.g:285:4: ^( GT t1= expr t2= expr )
+                    // FunChecker.g:289:4: ^( GT t1= expr t2= expr )
                     {
-                    GT22=(CommonTree)match(input,GT,FOLLOW_GT_in_expr559); 
+                    GT23=(CommonTree)match(input,GT,FOLLOW_GT_in_expr588); 
 
                     match(input, Token.DOWN, null); 
-                    pushFollow(FOLLOW_expr_in_expr563);
+                    pushFollow(FOLLOW_expr_in_expr592);
                     t1=expr();
 
                     state._fsp--;
 
 
-                    pushFollow(FOLLOW_expr_in_expr567);
+                    pushFollow(FOLLOW_expr_in_expr596);
                     t2=expr();
 
                     state._fsp--;
@@ -1200,23 +1247,23 @@ public class FunChecker extends TreeParser {
 
 
                      type = checkBinary(
-                    				    COMPTYPE, t1, t2, GT22); 
+                    				    COMPTYPE, t1, t2, GT23); 
 
                     }
                     break;
                 case 9 :
-                    // .\\FunChecker.g:288:4: ^( PLUS t1= expr t2= expr )
+                    // FunChecker.g:292:4: ^( PLUS t1= expr t2= expr )
                     {
-                    PLUS23=(CommonTree)match(input,PLUS,FOLLOW_PLUS_in_expr580); 
+                    PLUS24=(CommonTree)match(input,PLUS,FOLLOW_PLUS_in_expr609); 
 
                     match(input, Token.DOWN, null); 
-                    pushFollow(FOLLOW_expr_in_expr584);
+                    pushFollow(FOLLOW_expr_in_expr613);
                     t1=expr();
 
                     state._fsp--;
 
 
-                    pushFollow(FOLLOW_expr_in_expr588);
+                    pushFollow(FOLLOW_expr_in_expr617);
                     t2=expr();
 
                     state._fsp--;
@@ -1226,23 +1273,23 @@ public class FunChecker extends TreeParser {
 
 
                      type = checkBinary(
-                    				    ARITHTYPE, t1, t2, PLUS23); 
+                    				    ARITHTYPE, t1, t2, PLUS24); 
 
                     }
                     break;
                 case 10 :
-                    // .\\FunChecker.g:291:4: ^( MINUS t1= expr t2= expr )
+                    // FunChecker.g:295:4: ^( MINUS t1= expr t2= expr )
                     {
-                    MINUS24=(CommonTree)match(input,MINUS,FOLLOW_MINUS_in_expr601); 
+                    MINUS25=(CommonTree)match(input,MINUS,FOLLOW_MINUS_in_expr630); 
 
                     match(input, Token.DOWN, null); 
-                    pushFollow(FOLLOW_expr_in_expr605);
+                    pushFollow(FOLLOW_expr_in_expr634);
                     t1=expr();
 
                     state._fsp--;
 
 
-                    pushFollow(FOLLOW_expr_in_expr609);
+                    pushFollow(FOLLOW_expr_in_expr638);
                     t2=expr();
 
                     state._fsp--;
@@ -1252,23 +1299,23 @@ public class FunChecker extends TreeParser {
 
 
                      type = checkBinary(
-                    				    ARITHTYPE, t1, t2, MINUS24); 
+                    				    ARITHTYPE, t1, t2, MINUS25); 
 
                     }
                     break;
                 case 11 :
-                    // .\\FunChecker.g:294:4: ^( TIMES t1= expr t2= expr )
+                    // FunChecker.g:298:4: ^( TIMES t1= expr t2= expr )
                     {
-                    TIMES25=(CommonTree)match(input,TIMES,FOLLOW_TIMES_in_expr622); 
+                    TIMES26=(CommonTree)match(input,TIMES,FOLLOW_TIMES_in_expr651); 
 
                     match(input, Token.DOWN, null); 
-                    pushFollow(FOLLOW_expr_in_expr626);
+                    pushFollow(FOLLOW_expr_in_expr655);
                     t1=expr();
 
                     state._fsp--;
 
 
-                    pushFollow(FOLLOW_expr_in_expr630);
+                    pushFollow(FOLLOW_expr_in_expr659);
                     t2=expr();
 
                     state._fsp--;
@@ -1278,23 +1325,23 @@ public class FunChecker extends TreeParser {
 
 
                      type = checkBinary(
-                    				    ARITHTYPE, t1, t2, TIMES25); 
+                    				    ARITHTYPE, t1, t2, TIMES26); 
 
                     }
                     break;
                 case 12 :
-                    // .\\FunChecker.g:297:4: ^( DIV t1= expr t2= expr )
+                    // FunChecker.g:301:4: ^( DIV t1= expr t2= expr )
                     {
-                    DIV26=(CommonTree)match(input,DIV,FOLLOW_DIV_in_expr643); 
+                    DIV27=(CommonTree)match(input,DIV,FOLLOW_DIV_in_expr672); 
 
                     match(input, Token.DOWN, null); 
-                    pushFollow(FOLLOW_expr_in_expr647);
+                    pushFollow(FOLLOW_expr_in_expr676);
                     t1=expr();
 
                     state._fsp--;
 
 
-                    pushFollow(FOLLOW_expr_in_expr651);
+                    pushFollow(FOLLOW_expr_in_expr680);
                     t2=expr();
 
                     state._fsp--;
@@ -1304,17 +1351,17 @@ public class FunChecker extends TreeParser {
 
 
                      type = checkBinary(
-                    				     ARITHTYPE, t1, t2, DIV26); 
+                    				     ARITHTYPE, t1, t2, DIV27); 
 
                     }
                     break;
                 case 13 :
-                    // .\\FunChecker.g:300:4: ^( NOT t= expr )
+                    // FunChecker.g:304:4: ^( NOT t= expr )
                     {
-                    NOT27=(CommonTree)match(input,NOT,FOLLOW_NOT_in_expr664); 
+                    NOT28=(CommonTree)match(input,NOT,FOLLOW_NOT_in_expr693); 
 
                     match(input, Token.DOWN, null); 
-                    pushFollow(FOLLOW_expr_in_expr668);
+                    pushFollow(FOLLOW_expr_in_expr697);
                     t=expr();
 
                     state._fsp--;
@@ -1323,14 +1370,14 @@ public class FunChecker extends TreeParser {
                     match(input, Token.UP, null); 
 
 
-                     type = checkUnary(NOTTYPE, t, NOT27); 
+                     type = checkUnary(NOTTYPE, t, NOT28); 
 
                     }
                     break;
                 case 14 :
-                    // .\\FunChecker.g:302:4: NOACTUAL
+                    // FunChecker.g:306:4: NOACTUAL
                     {
-                    match(input,NOACTUAL,FOLLOW_NOACTUAL_in_expr680); 
+                    match(input,NOACTUAL,FOLLOW_NOACTUAL_in_expr709); 
 
                      type = Type.VOID; 
 
@@ -1361,14 +1408,14 @@ public class FunChecker extends TreeParser {
     public static final BitSet FOLLOW_proc_decl_in_program79 = new BitSet(new long[]{0x0000000200020008L});
     public static final BitSet FOLLOW_PROC_in_proc_decl102 = new BitSet(new long[]{0x0000000000000004L});
     public static final BitSet FOLLOW_ID_in_proc_decl108 = new BitSet(new long[]{0x0000000020010000L});
-    public static final BitSet FOLLOW_formal_in_proc_decl122 = new BitSet(new long[]{0x0000184400600010L});
-    public static final BitSet FOLLOW_var_decl_in_proc_decl134 = new BitSet(new long[]{0x0000184400600010L});
+    public static final BitSet FOLLOW_formal_in_proc_decl122 = new BitSet(new long[]{0x0000184400608010L});
+    public static final BitSet FOLLOW_var_decl_in_proc_decl134 = new BitSet(new long[]{0x0000184400608010L});
     public static final BitSet FOLLOW_com_in_proc_decl141 = new BitSet(new long[]{0x0000000000000008L});
     public static final BitSet FOLLOW_FUNC_in_proc_decl154 = new BitSet(new long[]{0x0000000000000004L});
     public static final BitSet FOLLOW_type_in_proc_decl162 = new BitSet(new long[]{0x0000000000100000L});
     public static final BitSet FOLLOW_ID_in_proc_decl168 = new BitSet(new long[]{0x0000000020010000L});
-    public static final BitSet FOLLOW_formal_in_proc_decl182 = new BitSet(new long[]{0x0000184400600010L});
-    public static final BitSet FOLLOW_var_decl_in_proc_decl194 = new BitSet(new long[]{0x0000184400600010L});
+    public static final BitSet FOLLOW_formal_in_proc_decl182 = new BitSet(new long[]{0x0000184400608010L});
+    public static final BitSet FOLLOW_var_decl_in_proc_decl194 = new BitSet(new long[]{0x0000184400608010L});
     public static final BitSet FOLLOW_com_in_proc_decl201 = new BitSet(new long[]{0x00000501DC1C6200L});
     public static final BitSet FOLLOW_expr_in_proc_decl209 = new BitSet(new long[]{0x0000000000000008L});
     public static final BitSet FOLLOW_FORMAL_in_formal234 = new BitSet(new long[]{0x0000000000000004L});
@@ -1388,47 +1435,54 @@ public class FunChecker extends TreeParser {
     public static final BitSet FOLLOW_ID_in_com352 = new BitSet(new long[]{0x00000501DC1C6200L});
     public static final BitSet FOLLOW_expr_in_com356 = new BitSet(new long[]{0x0000000000000008L});
     public static final BitSet FOLLOW_IF_in_com369 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_expr_in_com373 = new BitSet(new long[]{0x0000104400600010L});
+    public static final BitSet FOLLOW_expr_in_com373 = new BitSet(new long[]{0x0000104400608010L});
     public static final BitSet FOLLOW_com_in_com375 = new BitSet(new long[]{0x0000000000000008L});
     public static final BitSet FOLLOW_IFELSE_in_com388 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_expr_in_com392 = new BitSet(new long[]{0x0000104400600010L});
-    public static final BitSet FOLLOW_com_in_com394 = new BitSet(new long[]{0x0000104400600010L});
+    public static final BitSet FOLLOW_expr_in_com392 = new BitSet(new long[]{0x0000104400608010L});
+    public static final BitSet FOLLOW_com_in_com394 = new BitSet(new long[]{0x0000104400608010L});
     public static final BitSet FOLLOW_com_in_com396 = new BitSet(new long[]{0x0000000000000008L});
     public static final BitSet FOLLOW_WHILE_in_com409 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_expr_in_com413 = new BitSet(new long[]{0x0000104400600010L});
+    public static final BitSet FOLLOW_expr_in_com413 = new BitSet(new long[]{0x0000104400608010L});
     public static final BitSet FOLLOW_com_in_com415 = new BitSet(new long[]{0x0000000000000008L});
-    public static final BitSet FOLLOW_SEQ_in_com428 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_com_in_com430 = new BitSet(new long[]{0x0000104400600018L});
-    public static final BitSet FOLLOW_FALSE_in_expr453 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_TRUE_in_expr464 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_NUM_in_expr475 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ID_in_expr486 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_FUNCCALL_in_expr498 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_ID_in_expr500 = new BitSet(new long[]{0x00000501DC1C6200L});
-    public static final BitSet FOLLOW_expr_in_expr504 = new BitSet(new long[]{0x0000000000000008L});
-    public static final BitSet FOLLOW_EQ_in_expr517 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_expr_in_expr521 = new BitSet(new long[]{0x00000501DC1C6200L});
-    public static final BitSet FOLLOW_expr_in_expr525 = new BitSet(new long[]{0x0000000000000008L});
-    public static final BitSet FOLLOW_LT_in_expr538 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_expr_in_expr542 = new BitSet(new long[]{0x00000501DC1C6200L});
-    public static final BitSet FOLLOW_expr_in_expr546 = new BitSet(new long[]{0x0000000000000008L});
-    public static final BitSet FOLLOW_GT_in_expr559 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_expr_in_expr563 = new BitSet(new long[]{0x00000501DC1C6200L});
-    public static final BitSet FOLLOW_expr_in_expr567 = new BitSet(new long[]{0x0000000000000008L});
-    public static final BitSet FOLLOW_PLUS_in_expr580 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_expr_in_expr584 = new BitSet(new long[]{0x00000501DC1C6200L});
-    public static final BitSet FOLLOW_expr_in_expr588 = new BitSet(new long[]{0x0000000000000008L});
-    public static final BitSet FOLLOW_MINUS_in_expr601 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_expr_in_expr605 = new BitSet(new long[]{0x00000501DC1C6200L});
-    public static final BitSet FOLLOW_expr_in_expr609 = new BitSet(new long[]{0x0000000000000008L});
-    public static final BitSet FOLLOW_TIMES_in_expr622 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_expr_in_expr626 = new BitSet(new long[]{0x00000501DC1C6200L});
-    public static final BitSet FOLLOW_expr_in_expr630 = new BitSet(new long[]{0x0000000000000008L});
-    public static final BitSet FOLLOW_DIV_in_expr643 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_expr_in_expr647 = new BitSet(new long[]{0x00000501DC1C6200L});
-    public static final BitSet FOLLOW_expr_in_expr651 = new BitSet(new long[]{0x0000000000000008L});
-    public static final BitSet FOLLOW_NOT_in_expr664 = new BitSet(new long[]{0x0000000000000004L});
-    public static final BitSet FOLLOW_expr_in_expr668 = new BitSet(new long[]{0x0000000000000008L});
-    public static final BitSet FOLLOW_NOACTUAL_in_expr680 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_FOR_in_com428 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_ID_in_com430 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_ASSN_in_com432 = new BitSet(new long[]{0x00000501DC1C6200L});
+    public static final BitSet FOLLOW_expr_in_com436 = new BitSet(new long[]{0x0000020000000000L});
+    public static final BitSet FOLLOW_TO_in_com438 = new BitSet(new long[]{0x00000501DC1C6200L});
+    public static final BitSet FOLLOW_expr_in_com442 = new BitSet(new long[]{0x0000104400608010L});
+    public static final BitSet FOLLOW_com_in_com444 = new BitSet(new long[]{0x0000000000000008L});
+    public static final BitSet FOLLOW_SEQ_in_com457 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_com_in_com459 = new BitSet(new long[]{0x0000104400608018L});
+    public static final BitSet FOLLOW_FALSE_in_expr482 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_TRUE_in_expr493 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_NUM_in_expr504 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ID_in_expr515 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_FUNCCALL_in_expr527 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_ID_in_expr529 = new BitSet(new long[]{0x00000501DC1C6200L});
+    public static final BitSet FOLLOW_expr_in_expr533 = new BitSet(new long[]{0x0000000000000008L});
+    public static final BitSet FOLLOW_EQ_in_expr546 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_expr_in_expr550 = new BitSet(new long[]{0x00000501DC1C6200L});
+    public static final BitSet FOLLOW_expr_in_expr554 = new BitSet(new long[]{0x0000000000000008L});
+    public static final BitSet FOLLOW_LT_in_expr567 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_expr_in_expr571 = new BitSet(new long[]{0x00000501DC1C6200L});
+    public static final BitSet FOLLOW_expr_in_expr575 = new BitSet(new long[]{0x0000000000000008L});
+    public static final BitSet FOLLOW_GT_in_expr588 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_expr_in_expr592 = new BitSet(new long[]{0x00000501DC1C6200L});
+    public static final BitSet FOLLOW_expr_in_expr596 = new BitSet(new long[]{0x0000000000000008L});
+    public static final BitSet FOLLOW_PLUS_in_expr609 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_expr_in_expr613 = new BitSet(new long[]{0x00000501DC1C6200L});
+    public static final BitSet FOLLOW_expr_in_expr617 = new BitSet(new long[]{0x0000000000000008L});
+    public static final BitSet FOLLOW_MINUS_in_expr630 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_expr_in_expr634 = new BitSet(new long[]{0x00000501DC1C6200L});
+    public static final BitSet FOLLOW_expr_in_expr638 = new BitSet(new long[]{0x0000000000000008L});
+    public static final BitSet FOLLOW_TIMES_in_expr651 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_expr_in_expr655 = new BitSet(new long[]{0x00000501DC1C6200L});
+    public static final BitSet FOLLOW_expr_in_expr659 = new BitSet(new long[]{0x0000000000000008L});
+    public static final BitSet FOLLOW_DIV_in_expr672 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_expr_in_expr676 = new BitSet(new long[]{0x00000501DC1C6200L});
+    public static final BitSet FOLLOW_expr_in_expr680 = new BitSet(new long[]{0x0000000000000008L});
+    public static final BitSet FOLLOW_NOT_in_expr693 = new BitSet(new long[]{0x0000000000000004L});
+    public static final BitSet FOLLOW_expr_in_expr697 = new BitSet(new long[]{0x0000000000000008L});
+    public static final BitSet FOLLOW_NOACTUAL_in_expr709 = new BitSet(new long[]{0x0000000000000002L});
 
 }
