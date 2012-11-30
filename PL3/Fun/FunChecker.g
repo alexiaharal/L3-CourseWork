@@ -251,7 +251,8 @@ com
 	|	^(WHILE t=expr com)
 				{ checkType(Type.BOOL, t, $WHILE);
 				}
-	|	^(FOR ID ASSN t=expr TO s=expr com)
+	//EXTENSION
+	|	^(FOR ID t=expr1 s=expr2 com)
 				{ 	checkType(Type.INT, t, $FOR);
 					checkType(Type.INT, s, $FOR);
 				}

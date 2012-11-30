@@ -1,0 +1,61 @@
+
+Syntactic analysis ...
+0 syntactic errors
+AST:
+  PROG
+    proc
+      main
+      NOFORMAL
+      VAR
+        int
+        m
+        FUNCCALL
+          read
+          NOACTUAL
+      VAR
+        int
+        n
+        1
+      SEQ
+        while
+          <
+            m
+            1
+          SEQ
+            PROCCALL
+              write
+              *
+                n
+                n
+            =
+              n
+              +
+                n
+                1
+
+Contextual analysis ...
+0 scope/type errors
+
+Code generation ...
+Object code:
+     0: CALL    4
+     3: HALT    
+     4: CALL    32766
+     7: LOADLIT 1
+    10: LOADL   2
+    13: LOADLIT 1
+    16: CMPLT   
+    17: JUMPF   43
+    20: LOADL   3
+    23: LOADL   3
+    26: MUL     
+    27: CALL    32767
+    30: LOADL   3
+    33: LOADLIT 1
+    36: ADD     
+    37: STOREL  3
+    40: JUMP    10
+    43: RETURN  0
+
+Interpretation ...
+? 

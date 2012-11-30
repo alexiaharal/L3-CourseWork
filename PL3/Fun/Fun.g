@@ -1,4 +1,4 @@
-4//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 //
 // Specification of the Fun syntactic analyser.
 //
@@ -87,9 +87,9 @@ com
 		  )
 	|	WHILE expr COLON
 		  seq_com DOT              -> ^(WHILE expr seq_com)
-	|	FOR ID ASSN e1=expr TO
-			e2=expr COLON seq_com
-			DOT					   -> ^(FOR ID $e1 $e2 seq_com)
+	//EXTENSION
+	|	FOR ID ASSN e1=expr TO e2=expr COLON seq_com DOT
+								   -> ^(FOR ID $e1 $e2 seq_com)
 
 	;
 

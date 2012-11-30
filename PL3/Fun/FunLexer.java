@@ -1,67 +1,64 @@
-// $ANTLR 3.4 Fun.g 2012-11-09 00:45:17
+// $ANTLR 3.3 Nov 30, 2010 12:50:56 Fun.g 2012-11-30 05:12:04
 
 import org.antlr.runtime.*;
 import java.util.Stack;
 import java.util.List;
 import java.util.ArrayList;
 
-@SuppressWarnings({"all", "warnings", "unchecked"})
 public class FunLexer extends Lexer {
     public static final int EOF=-1;
-    public static final int ASSN=4;
-    public static final int BOOL=5;
-    public static final int COLON=6;
-    public static final int COMMENT=7;
-    public static final int DIGIT=8;
-    public static final int DIV=9;
-    public static final int DOT=10;
-    public static final int ELSE=11;
-    public static final int EOL=12;
-    public static final int EQ=13;
-    public static final int FALSE=14;
-    public static final int FOR=15;
-    public static final int FORMAL=16;
-    public static final int FUNC=17;
-    public static final int FUNCCALL=18;
-    public static final int GT=19;
-    public static final int ID=20;
-    public static final int IF=21;
-    public static final int IFELSE=22;
+    public static final int PROG=4;
+    public static final int VAR=5;
+    public static final int FORMAL=6;
+    public static final int NOFORMAL=7;
+    public static final int IFELSE=8;
+    public static final int SEQ=9;
+    public static final int PROCCALL=10;
+    public static final int FUNCCALL=11;
+    public static final int NOACTUAL=12;
+    public static final int PROC=13;
+    public static final int ID=14;
+    public static final int LPAR=15;
+    public static final int RPAR=16;
+    public static final int COLON=17;
+    public static final int DOT=18;
+    public static final int FUNC=19;
+    public static final int RETURN=20;
+    public static final int ASSN=21;
+    public static final int BOOL=22;
     public static final int INT=23;
-    public static final int LETTER=24;
-    public static final int LPAR=25;
-    public static final int LT=26;
-    public static final int MINUS=27;
-    public static final int NOACTUAL=28;
-    public static final int NOFORMAL=29;
-    public static final int NOT=30;
-    public static final int NUM=31;
+    public static final int IF=24;
+    public static final int ELSE=25;
+    public static final int WHILE=26;
+    public static final int FOR=27;
+    public static final int TO=28;
+    public static final int EQ=29;
+    public static final int LT=30;
+    public static final int GT=31;
     public static final int PLUS=32;
-    public static final int PROC=33;
-    public static final int PROCCALL=34;
-    public static final int PROG=35;
-    public static final int RETURN=36;
-    public static final int RPAR=37;
-    public static final int SEQ=38;
-    public static final int SPACE=39;
-    public static final int TIMES=40;
-    public static final int TO=41;
-    public static final int TRUE=42;
-    public static final int VAR=43;
-    public static final int WHILE=44;
+    public static final int MINUS=33;
+    public static final int TIMES=34;
+    public static final int DIV=35;
+    public static final int FALSE=36;
+    public static final int TRUE=37;
+    public static final int NUM=38;
+    public static final int NOT=39;
+    public static final int DIGIT=40;
+    public static final int LETTER=41;
+    public static final int SPACE=42;
+    public static final int EOL=43;
+    public static final int COMMENT=44;
 
     // delegates
     // delegators
-    public Lexer[] getDelegates() {
-        return new Lexer[] {};
-    }
 
-    public FunLexer() {} 
+    public FunLexer() {;} 
     public FunLexer(CharStream input) {
         this(input, new RecognizerSharedState());
     }
     public FunLexer(CharStream input, RecognizerSharedState state) {
         super(input,state);
+
     }
     public String getGrammarFileName() { return "Fun.g"; }
 
@@ -70,11 +67,10 @@ public class FunLexer extends Lexer {
         try {
             int _type = BOOL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Fun.g:131:6: ( 'bool' )
-            // Fun.g:131:8: 'bool'
+            // Fun.g:132:6: ( 'bool' )
+            // Fun.g:132:8: 'bool'
             {
             match("bool"); 
-
 
 
             }
@@ -83,7 +79,6 @@ public class FunLexer extends Lexer {
             state.channel = _channel;
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "BOOL"
@@ -93,11 +88,10 @@ public class FunLexer extends Lexer {
         try {
             int _type = ELSE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Fun.g:132:6: ( 'else' )
-            // Fun.g:132:8: 'else'
+            // Fun.g:133:6: ( 'else' )
+            // Fun.g:133:8: 'else'
             {
             match("else"); 
-
 
 
             }
@@ -106,7 +100,6 @@ public class FunLexer extends Lexer {
             state.channel = _channel;
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "ELSE"
@@ -116,11 +109,10 @@ public class FunLexer extends Lexer {
         try {
             int _type = FALSE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Fun.g:133:7: ( 'false' )
-            // Fun.g:133:9: 'false'
+            // Fun.g:134:7: ( 'false' )
+            // Fun.g:134:9: 'false'
             {
             match("false"); 
-
 
 
             }
@@ -129,7 +121,6 @@ public class FunLexer extends Lexer {
             state.channel = _channel;
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "FALSE"
@@ -139,11 +130,10 @@ public class FunLexer extends Lexer {
         try {
             int _type = FUNC;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Fun.g:134:6: ( 'func' )
-            // Fun.g:134:8: 'func'
+            // Fun.g:135:6: ( 'func' )
+            // Fun.g:135:8: 'func'
             {
             match("func"); 
-
 
 
             }
@@ -152,7 +142,6 @@ public class FunLexer extends Lexer {
             state.channel = _channel;
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "FUNC"
@@ -162,11 +151,10 @@ public class FunLexer extends Lexer {
         try {
             int _type = IF;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Fun.g:135:4: ( 'if' )
-            // Fun.g:135:6: 'if'
+            // Fun.g:136:4: ( 'if' )
+            // Fun.g:136:6: 'if'
             {
             match("if"); 
-
 
 
             }
@@ -175,7 +163,6 @@ public class FunLexer extends Lexer {
             state.channel = _channel;
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "IF"
@@ -185,11 +172,10 @@ public class FunLexer extends Lexer {
         try {
             int _type = INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Fun.g:136:5: ( 'int' )
-            // Fun.g:136:7: 'int'
+            // Fun.g:137:5: ( 'int' )
+            // Fun.g:137:7: 'int'
             {
             match("int"); 
-
 
 
             }
@@ -198,7 +184,6 @@ public class FunLexer extends Lexer {
             state.channel = _channel;
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "INT"
@@ -208,11 +193,10 @@ public class FunLexer extends Lexer {
         try {
             int _type = PROC;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Fun.g:137:6: ( 'proc' )
-            // Fun.g:137:8: 'proc'
+            // Fun.g:138:6: ( 'proc' )
+            // Fun.g:138:8: 'proc'
             {
             match("proc"); 
-
 
 
             }
@@ -221,7 +205,6 @@ public class FunLexer extends Lexer {
             state.channel = _channel;
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "PROC"
@@ -231,11 +214,10 @@ public class FunLexer extends Lexer {
         try {
             int _type = RETURN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Fun.g:138:8: ( 'return' )
-            // Fun.g:138:10: 'return'
+            // Fun.g:139:8: ( 'return' )
+            // Fun.g:139:10: 'return'
             {
             match("return"); 
-
 
 
             }
@@ -244,7 +226,6 @@ public class FunLexer extends Lexer {
             state.channel = _channel;
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "RETURN"
@@ -254,11 +235,10 @@ public class FunLexer extends Lexer {
         try {
             int _type = TRUE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Fun.g:139:6: ( 'true' )
-            // Fun.g:139:8: 'true'
+            // Fun.g:140:6: ( 'true' )
+            // Fun.g:140:8: 'true'
             {
             match("true"); 
-
 
 
             }
@@ -267,7 +247,6 @@ public class FunLexer extends Lexer {
             state.channel = _channel;
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "TRUE"
@@ -277,11 +256,10 @@ public class FunLexer extends Lexer {
         try {
             int _type = WHILE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Fun.g:140:7: ( 'while' )
-            // Fun.g:140:9: 'while'
+            // Fun.g:141:7: ( 'while' )
+            // Fun.g:141:9: 'while'
             {
             match("while"); 
-
 
 
             }
@@ -290,7 +268,6 @@ public class FunLexer extends Lexer {
             state.channel = _channel;
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "WHILE"
@@ -300,11 +277,10 @@ public class FunLexer extends Lexer {
         try {
             int _type = FOR;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Fun.g:141:6: ( 'for' )
-            // Fun.g:141:8: 'for'
+            // Fun.g:142:6: ( 'for' )
+            // Fun.g:142:8: 'for'
             {
             match("for"); 
-
 
 
             }
@@ -313,7 +289,6 @@ public class FunLexer extends Lexer {
             state.channel = _channel;
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "FOR"
@@ -323,11 +298,10 @@ public class FunLexer extends Lexer {
         try {
             int _type = EQ;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Fun.g:143:4: ( '==' )
-            // Fun.g:143:6: '=='
+            // Fun.g:144:4: ( '==' )
+            // Fun.g:144:6: '=='
             {
             match("=="); 
-
 
 
             }
@@ -336,7 +310,6 @@ public class FunLexer extends Lexer {
             state.channel = _channel;
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "EQ"
@@ -346,8 +319,8 @@ public class FunLexer extends Lexer {
         try {
             int _type = LT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Fun.g:144:4: ( '<' )
-            // Fun.g:144:6: '<'
+            // Fun.g:145:4: ( '<' )
+            // Fun.g:145:6: '<'
             {
             match('<'); 
 
@@ -357,7 +330,6 @@ public class FunLexer extends Lexer {
             state.channel = _channel;
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "LT"
@@ -367,8 +339,8 @@ public class FunLexer extends Lexer {
         try {
             int _type = GT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Fun.g:145:4: ( '>' )
-            // Fun.g:145:6: '>'
+            // Fun.g:146:4: ( '>' )
+            // Fun.g:146:6: '>'
             {
             match('>'); 
 
@@ -378,7 +350,6 @@ public class FunLexer extends Lexer {
             state.channel = _channel;
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "GT"
@@ -388,8 +359,8 @@ public class FunLexer extends Lexer {
         try {
             int _type = PLUS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Fun.g:146:6: ( '+' )
-            // Fun.g:146:8: '+'
+            // Fun.g:147:6: ( '+' )
+            // Fun.g:147:8: '+'
             {
             match('+'); 
 
@@ -399,7 +370,6 @@ public class FunLexer extends Lexer {
             state.channel = _channel;
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "PLUS"
@@ -409,8 +379,8 @@ public class FunLexer extends Lexer {
         try {
             int _type = MINUS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Fun.g:147:7: ( '-' )
-            // Fun.g:147:9: '-'
+            // Fun.g:148:7: ( '-' )
+            // Fun.g:148:9: '-'
             {
             match('-'); 
 
@@ -420,7 +390,6 @@ public class FunLexer extends Lexer {
             state.channel = _channel;
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "MINUS"
@@ -430,8 +399,8 @@ public class FunLexer extends Lexer {
         try {
             int _type = TIMES;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Fun.g:148:7: ( '*' )
-            // Fun.g:148:9: '*'
+            // Fun.g:149:7: ( '*' )
+            // Fun.g:149:9: '*'
             {
             match('*'); 
 
@@ -441,7 +410,6 @@ public class FunLexer extends Lexer {
             state.channel = _channel;
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "TIMES"
@@ -451,8 +419,8 @@ public class FunLexer extends Lexer {
         try {
             int _type = DIV;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Fun.g:149:5: ( '/' )
-            // Fun.g:149:7: '/'
+            // Fun.g:150:5: ( '/' )
+            // Fun.g:150:7: '/'
             {
             match('/'); 
 
@@ -462,7 +430,6 @@ public class FunLexer extends Lexer {
             state.channel = _channel;
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "DIV"
@@ -472,11 +439,10 @@ public class FunLexer extends Lexer {
         try {
             int _type = NOT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Fun.g:150:5: ( 'not' )
-            // Fun.g:150:7: 'not'
+            // Fun.g:151:5: ( 'not' )
+            // Fun.g:151:7: 'not'
             {
             match("not"); 
-
 
 
             }
@@ -485,7 +451,6 @@ public class FunLexer extends Lexer {
             state.channel = _channel;
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "NOT"
@@ -495,8 +460,8 @@ public class FunLexer extends Lexer {
         try {
             int _type = ASSN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Fun.g:152:6: ( '=' )
-            // Fun.g:152:8: '='
+            // Fun.g:153:6: ( '=' )
+            // Fun.g:153:8: '='
             {
             match('='); 
 
@@ -506,7 +471,6 @@ public class FunLexer extends Lexer {
             state.channel = _channel;
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "ASSN"
@@ -516,8 +480,8 @@ public class FunLexer extends Lexer {
         try {
             int _type = LPAR;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Fun.g:155:6: ( '(' )
-            // Fun.g:155:8: '('
+            // Fun.g:156:6: ( '(' )
+            // Fun.g:156:8: '('
             {
             match('('); 
 
@@ -527,7 +491,6 @@ public class FunLexer extends Lexer {
             state.channel = _channel;
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "LPAR"
@@ -537,8 +500,8 @@ public class FunLexer extends Lexer {
         try {
             int _type = RPAR;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Fun.g:156:6: ( ')' )
-            // Fun.g:156:8: ')'
+            // Fun.g:157:6: ( ')' )
+            // Fun.g:157:8: ')'
             {
             match(')'); 
 
@@ -548,7 +511,6 @@ public class FunLexer extends Lexer {
             state.channel = _channel;
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "RPAR"
@@ -558,8 +520,8 @@ public class FunLexer extends Lexer {
         try {
             int _type = COLON;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Fun.g:157:7: ( ':' )
-            // Fun.g:157:9: ':'
+            // Fun.g:158:7: ( ':' )
+            // Fun.g:158:9: ':'
             {
             match(':'); 
 
@@ -569,7 +531,6 @@ public class FunLexer extends Lexer {
             state.channel = _channel;
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "COLON"
@@ -579,8 +540,8 @@ public class FunLexer extends Lexer {
         try {
             int _type = DOT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Fun.g:158:5: ( '.' )
-            // Fun.g:158:7: '.'
+            // Fun.g:159:5: ( '.' )
+            // Fun.g:159:7: '.'
             {
             match('.'); 
 
@@ -590,7 +551,6 @@ public class FunLexer extends Lexer {
             state.channel = _channel;
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "DOT"
@@ -600,11 +560,10 @@ public class FunLexer extends Lexer {
         try {
             int _type = TO;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Fun.g:159:4: ( 'to' )
-            // Fun.g:159:6: 'to'
+            // Fun.g:160:4: ( 'to' )
+            // Fun.g:160:6: 'to'
             {
             match("to"); 
-
 
 
             }
@@ -613,7 +572,6 @@ public class FunLexer extends Lexer {
             state.channel = _channel;
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "TO"
@@ -623,34 +581,26 @@ public class FunLexer extends Lexer {
         try {
             int _type = NUM;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Fun.g:161:5: ( ( DIGIT )+ )
-            // Fun.g:161:7: ( DIGIT )+
+            // Fun.g:162:5: ( ( DIGIT )+ )
+            // Fun.g:162:7: ( DIGIT )+
             {
-            // Fun.g:161:7: ( DIGIT )+
+            // Fun.g:162:7: ( DIGIT )+
             int cnt1=0;
             loop1:
             do {
                 int alt1=2;
                 int LA1_0 = input.LA(1);
 
-                if ( ((LA1_0 >= '0' && LA1_0 <= '9')) ) {
+                if ( ((LA1_0>='0' && LA1_0<='9')) ) {
                     alt1=1;
                 }
 
 
                 switch (alt1) {
             	case 1 :
-            	    // Fun.g:
+            	    // Fun.g:162:7: DIGIT
             	    {
-            	    if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
-            	        input.consume();
-            	    }
-            	    else {
-            	        MismatchedSetException mse = new MismatchedSetException(null,input);
-            	        recover(mse);
-            	        throw mse;
-            	    }
-
+            	    mDIGIT(); 
 
             	    }
             	    break;
@@ -671,7 +621,6 @@ public class FunLexer extends Lexer {
             state.channel = _channel;
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "NUM"
@@ -681,19 +630,17 @@ public class FunLexer extends Lexer {
         try {
             int _type = ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Fun.g:163:4: ( LETTER ( LETTER | DIGIT )* )
-            // Fun.g:163:6: LETTER ( LETTER | DIGIT )*
+            // Fun.g:164:4: ( LETTER ( LETTER | DIGIT )* )
+            // Fun.g:164:6: LETTER ( LETTER | DIGIT )*
             {
             mLETTER(); 
-
-
-            // Fun.g:163:13: ( LETTER | DIGIT )*
+            // Fun.g:164:13: ( LETTER | DIGIT )*
             loop2:
             do {
                 int alt2=2;
                 int LA2_0 = input.LA(1);
 
-                if ( ((LA2_0 >= '0' && LA2_0 <= '9')||(LA2_0 >= 'A' && LA2_0 <= 'Z')||(LA2_0 >= 'a' && LA2_0 <= 'z')) ) {
+                if ( ((LA2_0>='0' && LA2_0<='9')||(LA2_0>='A' && LA2_0<='Z')||(LA2_0>='a' && LA2_0<='z')) ) {
                     alt2=1;
                 }
 
@@ -702,14 +649,14 @@ public class FunLexer extends Lexer {
             	case 1 :
             	    // Fun.g:
             	    {
-            	    if ( (input.LA(1) >= '0' && input.LA(1) <= '9')||(input.LA(1) >= 'A' && input.LA(1) <= 'Z')||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
+            	    if ( (input.LA(1)>='0' && input.LA(1)<='9')||(input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
             	        input.consume();
+
             	    }
             	    else {
             	        MismatchedSetException mse = new MismatchedSetException(null,input);
             	        recover(mse);
-            	        throw mse;
-            	    }
+            	        throw mse;}
 
 
             	    }
@@ -727,7 +674,6 @@ public class FunLexer extends Lexer {
             state.channel = _channel;
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "ID"
@@ -737,10 +683,10 @@ public class FunLexer extends Lexer {
         try {
             int _type = SPACE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Fun.g:165:7: ( ( ' ' | '\\t' )+ )
-            // Fun.g:165:9: ( ' ' | '\\t' )+
+            // Fun.g:166:7: ( ( ' ' | '\\t' )+ )
+            // Fun.g:166:9: ( ' ' | '\\t' )+
             {
-            // Fun.g:165:9: ( ' ' | '\\t' )+
+            // Fun.g:166:9: ( ' ' | '\\t' )+
             int cnt3=0;
             loop3:
             do {
@@ -758,12 +704,12 @@ public class FunLexer extends Lexer {
             	    {
             	    if ( input.LA(1)=='\t'||input.LA(1)==' ' ) {
             	        input.consume();
+
             	    }
             	    else {
             	        MismatchedSetException mse = new MismatchedSetException(null,input);
             	        recover(mse);
-            	        throw mse;
-            	    }
+            	        throw mse;}
 
 
             	    }
@@ -778,7 +724,6 @@ public class FunLexer extends Lexer {
                 cnt3++;
             } while (true);
 
-
             skip();
 
             }
@@ -787,7 +732,6 @@ public class FunLexer extends Lexer {
             state.channel = _channel;
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "SPACE"
@@ -797,10 +741,10 @@ public class FunLexer extends Lexer {
         try {
             int _type = EOL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Fun.g:166:5: ( ( '\\r' )? '\\n' )
-            // Fun.g:166:7: ( '\\r' )? '\\n'
+            // Fun.g:167:5: ( ( '\\r' )? '\\n' )
+            // Fun.g:167:7: ( '\\r' )? '\\n'
             {
-            // Fun.g:166:7: ( '\\r' )?
+            // Fun.g:167:7: ( '\\r' )?
             int alt4=2;
             int LA4_0 = input.LA(1);
 
@@ -809,7 +753,7 @@ public class FunLexer extends Lexer {
             }
             switch (alt4) {
                 case 1 :
-                    // Fun.g:166:7: '\\r'
+                    // Fun.g:167:7: '\\r'
                     {
                     match('\r'); 
 
@@ -818,9 +762,7 @@ public class FunLexer extends Lexer {
 
             }
 
-
             match('\n'); 
-
             skip();
 
             }
@@ -829,7 +771,6 @@ public class FunLexer extends Lexer {
             state.channel = _channel;
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "EOL"
@@ -839,34 +780,33 @@ public class FunLexer extends Lexer {
         try {
             int _type = COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Fun.g:167:9: ( '#' (~ ( '\\r' | '\\n' ) )* ( '\\r' )? '\\n' )
-            // Fun.g:167:11: '#' (~ ( '\\r' | '\\n' ) )* ( '\\r' )? '\\n'
+            // Fun.g:168:9: ( '#' (~ ( '\\r' | '\\n' ) )* ( '\\r' )? '\\n' )
+            // Fun.g:168:11: '#' (~ ( '\\r' | '\\n' ) )* ( '\\r' )? '\\n'
             {
             match('#'); 
-
-            // Fun.g:167:15: (~ ( '\\r' | '\\n' ) )*
+            // Fun.g:168:15: (~ ( '\\r' | '\\n' ) )*
             loop5:
             do {
                 int alt5=2;
                 int LA5_0 = input.LA(1);
 
-                if ( ((LA5_0 >= '\u0000' && LA5_0 <= '\t')||(LA5_0 >= '\u000B' && LA5_0 <= '\f')||(LA5_0 >= '\u000E' && LA5_0 <= '\uFFFF')) ) {
+                if ( ((LA5_0>='\u0000' && LA5_0<='\t')||(LA5_0>='\u000B' && LA5_0<='\f')||(LA5_0>='\u000E' && LA5_0<='\uFFFF')) ) {
                     alt5=1;
                 }
 
 
                 switch (alt5) {
             	case 1 :
-            	    // Fun.g:
+            	    // Fun.g:168:15: ~ ( '\\r' | '\\n' )
             	    {
-            	    if ( (input.LA(1) >= '\u0000' && input.LA(1) <= '\t')||(input.LA(1) >= '\u000B' && input.LA(1) <= '\f')||(input.LA(1) >= '\u000E' && input.LA(1) <= '\uFFFF') ) {
+            	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
+
             	    }
             	    else {
             	        MismatchedSetException mse = new MismatchedSetException(null,input);
             	        recover(mse);
-            	        throw mse;
-            	    }
+            	        throw mse;}
 
 
             	    }
@@ -877,8 +817,7 @@ public class FunLexer extends Lexer {
                 }
             } while (true);
 
-
-            // Fun.g:168:5: ( '\\r' )?
+            // Fun.g:169:5: ( '\\r' )?
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -887,7 +826,7 @@ public class FunLexer extends Lexer {
             }
             switch (alt6) {
                 case 1 :
-                    // Fun.g:168:5: '\\r'
+                    // Fun.g:169:5: '\\r'
                     {
                     match('\r'); 
 
@@ -896,9 +835,7 @@ public class FunLexer extends Lexer {
 
             }
 
-
             match('\n'); 
-
             skip();
 
             }
@@ -907,7 +844,6 @@ public class FunLexer extends Lexer {
             state.channel = _channel;
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "COMMENT"
@@ -915,25 +851,23 @@ public class FunLexer extends Lexer {
     // $ANTLR start "LETTER"
     public final void mLETTER() throws RecognitionException {
         try {
-            // Fun.g:170:17: ( 'a' .. 'z' | 'A' .. 'Z' )
+            // Fun.g:171:17: ( 'a' .. 'z' | 'A' .. 'Z' )
             // Fun.g:
             {
-            if ( (input.LA(1) >= 'A' && input.LA(1) <= 'Z')||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
+            if ( (input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
+
             }
             else {
                 MismatchedSetException mse = new MismatchedSetException(null,input);
                 recover(mse);
-                throw mse;
-            }
+                throw mse;}
 
 
             }
-
 
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "LETTER"
@@ -941,25 +875,15 @@ public class FunLexer extends Lexer {
     // $ANTLR start "DIGIT"
     public final void mDIGIT() throws RecognitionException {
         try {
-            // Fun.g:171:17: ( '0' .. '9' )
-            // Fun.g:
+            // Fun.g:172:17: ( '0' .. '9' )
+            // Fun.g:172:19: '0' .. '9'
             {
-            if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
-                input.consume();
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;
-            }
-
+            matchRange('0','9'); 
 
             }
-
 
         }
         finally {
-        	// do for sure before leaving
         }
     }
     // $ANTLR end "DIGIT"
@@ -974,14 +898,12 @@ public class FunLexer extends Lexer {
                 {
                 mBOOL(); 
 
-
                 }
                 break;
             case 2 :
                 // Fun.g:1:15: ELSE
                 {
                 mELSE(); 
-
 
                 }
                 break;
@@ -990,14 +912,12 @@ public class FunLexer extends Lexer {
                 {
                 mFALSE(); 
 
-
                 }
                 break;
             case 4 :
                 // Fun.g:1:26: FUNC
                 {
                 mFUNC(); 
-
 
                 }
                 break;
@@ -1006,14 +926,12 @@ public class FunLexer extends Lexer {
                 {
                 mIF(); 
 
-
                 }
                 break;
             case 6 :
                 // Fun.g:1:34: INT
                 {
                 mINT(); 
-
 
                 }
                 break;
@@ -1022,14 +940,12 @@ public class FunLexer extends Lexer {
                 {
                 mPROC(); 
 
-
                 }
                 break;
             case 8 :
                 // Fun.g:1:43: RETURN
                 {
                 mRETURN(); 
-
 
                 }
                 break;
@@ -1038,14 +954,12 @@ public class FunLexer extends Lexer {
                 {
                 mTRUE(); 
 
-
                 }
                 break;
             case 10 :
                 // Fun.g:1:55: WHILE
                 {
                 mWHILE(); 
-
 
                 }
                 break;
@@ -1054,14 +968,12 @@ public class FunLexer extends Lexer {
                 {
                 mFOR(); 
 
-
                 }
                 break;
             case 12 :
                 // Fun.g:1:65: EQ
                 {
                 mEQ(); 
-
 
                 }
                 break;
@@ -1070,14 +982,12 @@ public class FunLexer extends Lexer {
                 {
                 mLT(); 
 
-
                 }
                 break;
             case 14 :
                 // Fun.g:1:71: GT
                 {
                 mGT(); 
-
 
                 }
                 break;
@@ -1086,14 +996,12 @@ public class FunLexer extends Lexer {
                 {
                 mPLUS(); 
 
-
                 }
                 break;
             case 16 :
                 // Fun.g:1:79: MINUS
                 {
                 mMINUS(); 
-
 
                 }
                 break;
@@ -1102,14 +1010,12 @@ public class FunLexer extends Lexer {
                 {
                 mTIMES(); 
 
-
                 }
                 break;
             case 18 :
                 // Fun.g:1:91: DIV
                 {
                 mDIV(); 
-
 
                 }
                 break;
@@ -1118,14 +1024,12 @@ public class FunLexer extends Lexer {
                 {
                 mNOT(); 
 
-
                 }
                 break;
             case 20 :
                 // Fun.g:1:99: ASSN
                 {
                 mASSN(); 
-
 
                 }
                 break;
@@ -1134,14 +1038,12 @@ public class FunLexer extends Lexer {
                 {
                 mLPAR(); 
 
-
                 }
                 break;
             case 22 :
                 // Fun.g:1:109: RPAR
                 {
                 mRPAR(); 
-
 
                 }
                 break;
@@ -1150,14 +1052,12 @@ public class FunLexer extends Lexer {
                 {
                 mCOLON(); 
 
-
                 }
                 break;
             case 24 :
                 // Fun.g:1:120: DOT
                 {
                 mDOT(); 
-
 
                 }
                 break;
@@ -1166,14 +1066,12 @@ public class FunLexer extends Lexer {
                 {
                 mTO(); 
 
-
                 }
                 break;
             case 26 :
                 // Fun.g:1:127: NUM
                 {
                 mNUM(); 
-
 
                 }
                 break;
@@ -1182,14 +1080,12 @@ public class FunLexer extends Lexer {
                 {
                 mID(); 
 
-
                 }
                 break;
             case 28 :
                 // Fun.g:1:134: SPACE
                 {
                 mSPACE(); 
-
 
                 }
                 break;
@@ -1198,14 +1094,12 @@ public class FunLexer extends Lexer {
                 {
                 mEOL(); 
 
-
                 }
                 break;
             case 30 :
                 // Fun.g:1:144: COMMENT
                 {
                 mCOMMENT(); 
-
 
                 }
                 break;
