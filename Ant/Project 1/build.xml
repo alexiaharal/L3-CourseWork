@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <project default="two">
+
+     <target name="defaults">
+        <property name="test" value="test value"/>
+     </target>
+
+
+
+
+     <target name="one" depends="concat">
+        <echo>Running One</echo>
+     </target>
+
+     <target name="concat" depends="defaults">
+        <concat destfile="readme.txt">"${test}"</concat>
+     	<concat destfile="readme.txt">Hello Mattaz!</concat>
+     </target>
+  
+     <target name="two" depends="one">
+        <echo>Running Two</echo>
+     </target>
+  </project>
