@@ -5,7 +5,7 @@
 #include <string.h>
 #include <unistd.h>
 
-int main(int argc, char *argv[])
+int main()
     {
     #define BUFLEN 1500
     int fd;
@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     ssize_t rcount;
     char buf[BUFLEN];
 
-    printf("Server is now running on port 8000\n");
+    
     fd = socket (AF_INET,SOCK_STREAM,0);
     if (fd == -1){
          printf("Cannot create socket! %s\n", strerror(errno));
@@ -26,36 +26,48 @@ int main(int argc, char *argv[])
     addr.sin_port = htons(8000);
 
     if (bind(fd, (struct sockaddr *)&addr, sizeof(addr)) == -1) {
-        printf("cannot bind socket");
+        printf("cannot bind socket\n");
     }
 
     if (listen(fd, 20) == -1) {
-       printf("Unable to listen");
+       printf("Unable to listen\n");
     }
-
+	printf("Server is now running on port 8000\n");
     int connfd; 
     struct sockaddr_in cliaddr; 
     socklen_t   cliaddrlen = sizeof(cliaddr);
+    char data[]="Data received successfully!\n";
+    int datalen=strlen(data);
 
+    while(1){
+        connfd = accept(fd, (struct sockaddr *) &cliaddr, &cliaddrlen);
+        if (connfd == -1) {
+            printf("unable to accept\n");
+        }
 
-    connfd = accept(fd, (struct sockaddr *) &cliaddr, &cliaddrlen);
-    if (connfd == -1) {
-        printf("unable to accept");
+            rcount = read(connfd, buf, BUFLEN);
+            if (rcount == -1) {
+	          printf("Error has occurred\n");
+	          break;
+            }
+            for (i = 0; i < rcount; i++) {
+               // if(buf[i]=='\0'){
+               //     printf("ITS NULL\n");
+               // } 
+                printf("%c", buf[i]);
+                
+            }
+            printf("\n");
+            if (write(connfd,data, datalen) == -1){
+                printf("Unable to write %s\n", strerror(errno));
+                printf("\n");
+                //return -1;
+                break;
+            }
+            close(connfd);
+            printf("Connection Closed\n");
+
     }
-
-
-
-
-    rcount = read(connfd, buf, BUFLEN);
-    if (rcount == -1) {
-	printf("Error has occurred");
-	return -1;
-    }
-    for (i = 0; i < rcount; i++) { 
-        printf("%c", buf[i]);
-    }
-	close(connfd);
-	printf("Function ended");
 
 
     return 0;}
