@@ -1,0 +1,39 @@
+CREATE TABLE Breed (
+breedname VARCHAR(64) NOT NULL,
+PRIMARY KEY (breedname)
+)
+go
+CREATE TABLE Owner(
+ownerid int NOT NULL,
+name VARCHAR(32),
+phone VARCHAR(16),
+PRIMARY KEY(ownerid)
+)
+go
+CREATE TABLE Kennel(
+name VARCHAR(64) NOT NULL,
+address VARCHAR(64),
+phone VARCHAR(16),
+PRIMARY KEY(name)
+)
+go
+CREATE TABLE Show(
+showname VARCHAR(64) NOT NULL,
+opendate VARCHAR(32) NOT NULL,
+closedate VARCHAR(32),
+PRIMARY KEY(showname, opendate)
+)
+go
+CREATE TABLE Dog (
+dogid int NOT NULL,
+name VARCHAR(32),
+ownerid int,
+kennelname VARCHAR(64),
+breedname VARCHAR(64),
+mothername VARCHAR(32),
+fathername VARCHAR(32),
+PRIMARY KEY(dogid),
+FOREIGN KEY(ownerid) REFERENCES Owner(ownerid),
+FOREIGN KEY(kennelname) REFERENCES Kennel(kennelname),
+FOREIGN KEY(breedname) REFERENCES Breed(breedname)
+)
