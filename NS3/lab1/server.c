@@ -36,7 +36,7 @@ int main()
     int connfd; 
     struct sockaddr_in cliaddr; 
     socklen_t   cliaddrlen = sizeof(cliaddr);
-    char data[]="Data received successfully!\n";
+    char data[]="HTTP/1.1 404 Not Found\nDate: Tue, 20 Jan 2009 10:31:56 GMT\nServer: Apache/2.0.46 (Scientific Linux)\nContent-Length: 300\nConnection: close\nContent-Type: text/html; charset=iso-8859-1\n\n<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">\n<html>\n<head>\n<title>404 Not Found</title>\n<h1>It Works!</h1>\n</body>\n</html>";
     int datalen=strlen(data);
 
     while(1){
