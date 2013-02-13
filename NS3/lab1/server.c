@@ -65,9 +65,9 @@ int main()
 	printf("SIZE IS: %d\n",size);
 	fseek(file, 0, SEEK_SET);
 	char data[6000];
-	char temps[]="HTTP/1.1 404 Not Found\nDate: Tue, 20 Jan 2009 10:31:56 GMT\nServer: Apache/2.0.46 (Scientific Linux)\nContent-Length:";
-	sprintf(data,"%s%d",temps,size);//Input will hold all three lines of an entry.
-strncat(data,"\nConnection: close\nContent-Type: image/jpg; charset=iso-8859-1\r\n",sizeof(data));
+	char temps[]="HTTP/1.1 2000 OK\nDate: Tue, 20 Jan 2009 10:31:56 GMT\nServer: Apache/2.0.46 (Scientific Linux)\nContent-Length:";
+	sprintf(data,"%s%d",temps,size);
+strncat(data,"\nConnection: close\nContent-Type: image/jpg\r\n",sizeof(data));
 
         
 	//for loop to read in all three lines of an entry.

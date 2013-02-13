@@ -1,5 +1,3 @@
-sockettutorial:	sockettutorial.c
-	gcc -W -Wall -o sockettutorial sockettutorial.c
 server:	server.c client
 	gcc -W -Wall -o server server.c
 client: client.c

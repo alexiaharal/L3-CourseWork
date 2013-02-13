@@ -5,9 +5,6 @@
         <property name="test" value="test value"/>
      </target>
 
-
-
-
      <target name="one" depends="concat">
         <echo>Running One</echo>
      </target>
@@ -20,4 +17,5 @@
      <target name="two" depends="one">
         <echo>Running Two</echo>
      </target>
+     
   </project>
