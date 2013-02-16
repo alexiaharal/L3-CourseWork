@@ -2,6 +2,7 @@
 <HEADER><TITLE>RangoTang</TITLE></HEADER>
 <BODY>
 rango says: Hello World!
+<A HREF="/rango/cat_add/"> Add Category </A>
 {% if cat_list %}
 	{% for cat in cat_list %}
         <LI><A HREF="/rango/cat/{{cat.url}}">{{cat.name}}</A></LI>
