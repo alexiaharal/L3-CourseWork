@@ -1,7 +1,17 @@
 <HTML>
 <HEADER><TITLE>RangoTang</TITLE></HEADER>
 <BODY>
-rango says: Hello World!
+
+<P>
+        {% if user.is_authenticated %}
+                Welcome {{ user.username }}  |
+                <A href="/rango/restricted/">Restricted Page</A> |
+                <A href="/rango/logout/">Logout</A>
+        {% else %}
+                <A href="/rango/register/">Register</A> |
+                <A href="/rango/login/">Login</A>
+        {% endif %}
+</P>
 <A HREF="/rango/cat_add/"> Add Category </A>
 {% if cat_list %}
 	{% for cat in cat_list %}

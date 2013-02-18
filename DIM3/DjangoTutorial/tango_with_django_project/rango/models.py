@@ -1,5 +1,7 @@
 from django.db import models
 from django import forms
+from django.contrib.auth.models import User
+from django.forms import ModelForm
 
 class Category(models.Model):
 	name = models.CharField(max_length=128, unique=True)
@@ -41,7 +43,28 @@ class PageForm(forms.ModelForm):
                 	url = 'http://' + url
         	cleaned_data['url'] = url
         	return cleaned_data
+			
+class UserProfile(models.Model):
+        # This field is required.
+        user = models.OneToOneField(User)
+        # These fields are optional
+        website = models.URLField(blank=True)
+        picture = models.ImageField(upload_to='imgs', blank=True)
+        def __unicode__(self):
+                return self.user.username
 
+
+
+class UserForm(forms.ModelForm):
+        class Meta:
+                model = User
+                fields = ["username", "email", "password"]
+
+class UserProfileForm(forms.ModelForm):
+		
+        class Meta:
+                model = UserProfile
+		fields = ['website','picture']		
 
 
 
