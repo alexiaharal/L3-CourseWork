@@ -18,7 +18,7 @@ int main(int argc, char *argv[]){
     ssize_t rcount;
     char buf[BUFLEN];
 
-	char data[]="TIME\r\n";
+	char data[]="DATE\r\n";
 	int datalen = strlen(data);
 	struct addrinfo hints, *ai, *ai0;	
 	

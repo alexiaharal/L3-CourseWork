@@ -6,6 +6,17 @@
 #include <unistd.h>
 #include <time.h>
 
+
+void getDate(char *data){
+  time_t now;
+  struct tm *d;
+  char date[15];
+  time(&now);
+  d=localtime(&now);
+  strftime(date, 15, "%d/%m/%Y\r\n", d);
+  strcpy(data,date);
+}
+
 int main()
 {
   #define BUFLEN 1500
@@ -56,19 +67,13 @@ int main()
       printf("%c", buf[i]);
                 
     }
-    time_t now;
-    struct tm *d;
-    char data[15];
-    if (strncmp(buf, "DATE\r\n", strlen(buf))==0){
-      char date[15];
-      time(&now);
-      d=localtime(&now);
-      strftime(date, 15, "%d/%m/%Y\r\n", d);
-      strcpy(data,date);
-  }
-  else if(strncmp(buf, "TIME\r\n", strlen(buf))==0){
+    char data[15]="Null";
+    if ((strncmp(buf, "DATE\r\n", strlen(buf)))==0){
+      getDate(data);
+	}
+    /*  else if(strncmp(buf, "TIME\r\n", strlen(buf))==0){
     strcpy(data,asctime(localtime(&now)));
-  }else{
+    }*/else{
     strcpy(data,"Invalid command\r\n");
   }
 
