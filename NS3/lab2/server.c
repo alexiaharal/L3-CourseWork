@@ -9,12 +9,24 @@
 
 void getDate(char *data){
   time_t now;
-  struct tm *d;
+  struct tm *datedata;
   char date[15];
   time(&now);
-  d=localtime(&now);
-  strftime(date, 15, "%d/%m/%Y\r\n", d);
+  datedata=localtime(&now);
+  strftime(date, 15, "%d/%m/%Y\r\n", datedata);
   strcpy(data,date);
+}
+
+void getTime(char *data){
+  time_t current_time;
+  struct tm * timedata;
+  char timeString[6];
+
+  time(&current_time);
+  timedata = localtime(&current_time);
+  strftime(timeString, 8, "%H:%M\r\n", timedata);
+  strcpy(data,timeString);
+
 }
 
 int main()
@@ -71,9 +83,9 @@ int main()
     if ((strncmp(buf, "DATE\r\n", strlen(buf)))==0){
       getDate(data);
 	}
-    /*  else if(strncmp(buf, "TIME\r\n", strlen(buf))==0){
-    strcpy(data,asctime(localtime(&now)));
-    }*/else{
+    else if(strncmp(buf, "TIME\r\n", strlen(buf))==0){
+      getTime(data);
+    }else{
     strcpy(data,"Invalid command\r\n");
   }
 
@@ -81,7 +93,6 @@ int main()
   if (write(connfd,data, datalen) == -1){
       printf("Unable to write %s\n", strerror(errno));
       printf("\n");
-      //return -1;
       break;
     }
     close(connfd);
