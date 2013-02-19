@@ -1,0 +1,89 @@
+#include <arpa/inet.h>
+#include<stdio.h>
+#include <errno.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <time.h>
+
+int main()
+{
+  #define BUFLEN 1500
+  int fd;
+  ssize_t i;
+  ssize_t rcount;
+  char buf[BUFLEN];
+
+    
+  fd = socket (AF_INET,SOCK_STREAM,0);
+  if (fd == -1){
+    printf("Cannot create socket! %s\n", strerror(errno));
+  }
+
+  struct sockaddr_in addr;
+
+  addr.sin_addr.s_addr = INADDR_ANY;
+  addr.sin_family = AF_INET;
+  addr.sin_port = htons(8000);
+
+  if (bind(fd, (struct sockaddr *)&addr, sizeof(addr)) == -1) {
+    printf("cannot bind socket\n");
+  }
+
+  if (listen(fd, 20) == -1) {
+    printf("Unable to listen\n");
+  }
+  printf("Server is now running on port 8000\n");
+  int connfd; 
+  struct sockaddr_in cliaddr; 
+  socklen_t   cliaddrlen = sizeof(cliaddr);
+
+  while(1){
+    connfd = accept(fd, (struct sockaddr *) &cliaddr, &cliaddrlen);
+    if (connfd == -1) {
+      printf("unable to accept\n");
+    }
+
+    rcount = read(connfd, buf, BUFLEN);
+    if (rcount == -1) {
+      printf("Error has occurred\n");
+      break;
+    }
+    for (i = 0; i < rcount; i++) {
+       if(buf[i]=='\0'){
+           printf("ITS NULL\n");
+       } 
+      printf("%c", buf[i]);
+                
+    }
+    time_t now;
+    struct tm *d;
+    char data[15];
+    if (strncmp(buf, "DATE\r\n", strlen(buf))==0){
+      char date[15];
+      time(&now);
+      d=localtime(&now);
+      strftime(date, 15, "%d/%m/%Y\r\n", d);
+      strcpy(data,date);
+  }
+  else if(strncmp(buf, "TIME\r\n", strlen(buf))==0){
+    strcpy(data,asctime(localtime(&now)));
+  }else{
+    strcpy(data,"Invalid command\r\n");
+  }
+
+  int datalen=strlen(data);
+  if (write(connfd,data, datalen) == -1){
+      printf("Unable to write %s\n", strerror(errno));
+      printf("\n");
+      //return -1;
+      break;
+    }
+    close(connfd);
+    printf("Connection Closed\n");
+
+  }
+
+
+  return 0;
+}
