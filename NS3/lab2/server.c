@@ -5,7 +5,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <time.h>
-
+//author: 1000007
 
 void getDate(char *data){
   time_t now;
