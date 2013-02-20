@@ -58,20 +58,18 @@ int main(){
   printf("now entering while loop\n");
   while(1){
     
-    int *connfd = 0;
     printf("i have said connfd to 0\n");
-    connfd= (int *)accept(fd, (struct sockaddr *) &cliaddr, &cliaddrlen);
+    int connfd=accept(fd, (struct sockaddr *) &cliaddr, &cliaddrlen);
 
-    printf("this is connfd without the star %d \n",connfd);
-    int conny=*connfd;
-    printf("connfd location is set tp %d and value \n", conny);
-    if (*connfd == -1) {
+    printf("this the value of connfd %d \n",connfd);
+    printf("connfd location of connfd%d \n", &connfd);
+    if (connfd == -1) {
       printf("unable to accept\n");
     }
     pthread_t thread1;
     int  thr1;
     printf("now here\n");
-    thr1 = pthread_create( &thread1, NULL, acceptConnection, (void*) *connfd);
+    thr1 = pthread_create( &thread1, NULL, acceptConnection, (void*) &connfd);
     pthread_join( thread1, NULL);
     printf("Thread 1 returns: %d\n",thr1);
 
@@ -85,7 +83,8 @@ void *acceptConnection(void *ptr){
   char buf[BUFLEN];
   printf("now in thread \n");
   int connfd;
-  connfd=(int) &ptr;
+  int *connpt=(int *) ptr;
+  connfd=(int) *connpt;
   while(1){
     rcount = read(connfd, buf, BUFLEN);
     if (rcount == -1) {
