@@ -155,7 +155,7 @@ def user_login(request):
               if user.is_active:
                   login(request, user)
                   # Redirect to index page.
-                  return HttpResponseRedirect("rango/")
+                  return HttpResponseRedirect('/rango/')
               else:
                   # Return a 'disabled account' error message
                   return HttpResponse("You're account is disabled.")

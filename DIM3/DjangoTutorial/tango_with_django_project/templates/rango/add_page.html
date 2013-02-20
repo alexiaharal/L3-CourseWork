@@ -1,7 +1,5 @@
-<HTML>
-<HEADER>
-        <TITLE>Rango</TITLE>
-        </HEADER>
+{% extends 'rango/base.html' %}
+{% block content %}
 <BODY>
         <FORM id="page_form" method="post"
                 action="/rango/page_add/{{category_name_url}}">
@@ -18,5 +16,4 @@
                 <INPUT type="submit" name="submit" value="submit" />
         </FORM>
 
-</BODY>
-</HTML>
+{% endblock %}

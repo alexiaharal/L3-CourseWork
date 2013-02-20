@@ -1,5 +1,5 @@
-<HTML>
-<HEADER><TITLE>Rango</TITLE></HEADER>
+{% extends 'rango/base.html' %}
+{% block content %}
 <BODY>
         <FORM id="cat_form" method="post" action="/rango/cat_add/">
                 {% csrf_token %}
@@ -15,4 +15,4 @@
                 <INPUT type="submit" name="submit" value="submit" />
         </FORM>
 <BODY>
-</HTML>
+{% endblock %}

@@ -1,29 +1,23 @@
-<HTML>
-<HEADER><TITLE>RangoTang</TITLE></HEADER>
-<BODY>
+{% extends 'rango/base.html' %}
 
-<P>
-        {% if user.is_authenticated %}
-                Welcome {{ user.username }}  |
-                <A href="/rango/restricted/">Restricted Page</A> |
-                <A href="/rango/logout/">Logout</A>
+{% block sidebar %}
+<H2>Category List</H2>
+<UL>
+        {% if cat_list %}
+                {% for cat in cat_list %}
+                        <LI><A HREF="/rango/cat/{{ cat.url }}">{{ cat.name }}</A></LI>
+                {% endfor %}
         {% else %}
-                <A href="/rango/register/">Register</A> |
-                <A href="/rango/login/">Login</A>
+                <LI>No categories at present.</LI>
         {% endif %}
-</P>
-<A HREF="/rango/cat_add/"> Add Category </A>
-{% if cat_list %}
-	{% for cat in cat_list %}
-        <LI><A HREF="/rango/cat/{{cat.url}}">{{cat.name}}</A></LI>
-	{% endfor %}
-{% else %}
-	<P> No categories at present. </P>
-{% endif %}
+        <LI><A HREF="/rango/cat_add"> Add category</A></LI>
+</UL>
+
+{% endblock %}
 
 
-</BODY>
-</HTML>
-
-
-
+{% block content %}
+        <H2>Rango says: Hello World!</H2>
+        <BR />
+        <IMG SRC="{{ STATIC_URL}}imgs/leifos.jpg" />
+{% endblock %}

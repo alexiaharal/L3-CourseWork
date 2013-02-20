@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+
+Name       : Intensive 
+Description: A two-column, fixed-width design with dark color scheme.
+Version    : 1.0
+Released   : 20130210
+
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600|Archivo+Narrow:400,700" rel="stylesheet" type="text/css" />
+<link href="{{ STATIC_URL}}css/intensive/default.css" rel="stylesheet" type="text/css" media="all" />
+<!--[if IE 6]>
+<link href="default_ie6.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+</head>
+<body>
+<div id="header" class="container">
+	<div id="logo">
+		<h1><a href="#">Share<span>it</span></a></h1>
+	</div>
+	<div id="menu">
+		<ul>
+			<li class="active"><a href="#" accesskey="1" title="">Homepage</a></li>
+			<li><a href="/rango/">Home</a></li>
+			<li><a href="/rango/search/">Search</a></li>
+			<li><a href="/rango/restricted" >Restricted </a></li>
+			<li><a href="/rango/about/" >About</a></li>
+		</ul>
+	</div>
+</div>
+<div id="wrapper">
+        <div id="header">
+                <div id="logo">
+                        <h1><a href="/rango/">Rango</a></h1>
+                        <p>How to Tango with Django</p>
+                        <p>
+                        {% if user.is_authenticated %}
+                                Welcome {{ user.username }}  |
+                                <a href="/rango/logout/">Logout</A>
+                        {% else %}
+                                <a href="/rango/register/">Register</A> |
+                                <a href="/rango/login/">Login</A>
+                        {% endif %}
+                        </p>
+                </div>
+                <div id="menu">
+                        <ul>
+                                <li><a href="/rango/">Home</a></li>
+                                <li><a href="/rango/search/">Search</a></li>
+                                <li><a href="/rango/restricted" >Restricted</a></li>
+                                <li><a href="/rango/about/" >About</a></li>
+
+                        </ul>
+                </div>
+        </div>
+        <div id="page">
+                <div id="content">
+                        {% block content %}{% endblock %}
+                </div>
+                <div id="sidebar">
+                        <div id="tbox1">
+                        {% block sidebar %}{% endblock %}
+                        </div>
+                </div>
+        </div>
+
+        <div id="footer">
+                <p>Copyright (c) 2013 How To Tango With Django. All rights reserved. Design by <a href="http://www.freecsstemplates.org">FCT</a>. Photos by <a href="http://fotogrph.com/">Fotogrph</a>.</p>
+        </div>
+</div>
+</body>
+</html>

@@ -1,4 +1,5 @@
-<BODY>
+{% extends 'rango/base.html' %}
+{% block content %}
 <H2>{{category_name}}</H2>
 <A HREF="/rango/page_add/{{category_name_url}}"> Add page </A>
 {% if pages %}
@@ -10,4 +11,4 @@
 {% else %}
         <P>No pages in category.</P>
 {% endif %}
-</BODY>
+{% endblock %}

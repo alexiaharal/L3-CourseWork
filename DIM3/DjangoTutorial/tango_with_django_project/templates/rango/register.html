@@ -1,4 +1,5 @@
-<BODY>
+{% extends 'rango/base.html' %}
+{% block content %}
 {% if registered %}
         <A href="/rango/">Rango</A> says: thank you for registering.
 {% else %}
@@ -10,4 +11,5 @@
                 <INPUT type="submit" name="submit" value="submit" />
         </FORM>
 {% endif %}
-</BODY>
+
+{% endblock %}
