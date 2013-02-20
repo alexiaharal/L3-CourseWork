@@ -31,20 +31,20 @@ void getTime(char *data){
 
 int main()
 {
-  #define BUFLEN 1500
+#define BUFLEN 1500
   int fd;
   ssize_t i;
   ssize_t rcount;
   char buf[BUFLEN];
-
-    
+  
+  
   fd = socket (AF_INET,SOCK_STREAM,0);
   if (fd == -1){
     printf("Cannot create socket! %s\n", strerror(errno));
   }
-
+  
   struct sockaddr_in addr;
-
+  
   addr.sin_addr.s_addr = INADDR_ANY;
   addr.sin_family = AF_INET;
   addr.sin_port = htons(8000);
@@ -67,9 +67,10 @@ int main()
       printf("unable to accept\n");
     }
 
-    rcount = read(connfd, buf, BUFLEN);
+    while(1){
+      rcount = read(connfd, buf, BUFLEN);
     if (rcount == -1) {
-      printf("Error has occurred\n");
+      printf("Connection was closed by client.\n");
       break;
     }
     for (i = 0; i < rcount; i++) {
@@ -94,7 +95,7 @@ int main()
       printf("Unable to write %s\n", strerror(errno));
       printf("\n");
       break;
-    }
+  }}
     close(connfd);
     printf("Connection Closed\n");
 
