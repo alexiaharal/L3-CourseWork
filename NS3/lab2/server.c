@@ -62,6 +62,7 @@ int main()
   socklen_t   cliaddrlen = sizeof(cliaddr);
 
   while(1){
+    printf("Waiting for a new connection...\n");
     connfd = accept(fd, (struct sockaddr *) &cliaddr, &cliaddrlen);
     if (connfd == -1) {
       printf("unable to accept\n");
