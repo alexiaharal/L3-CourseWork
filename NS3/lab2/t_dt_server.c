@@ -21,17 +21,17 @@ void getTime(char *data){
   time_t current_time;
   struct tm * timedata;
   char timeString[6];
-
+  
   time(&current_time);
   timedata = localtime(&current_time);
   strftime(timeString, 8, "%H:%M\r\n", timedata);
   strcpy(data,timeString);
-
+  
 }
 
 int main(){
   int fd;
-
+  
   
   printf("creating socket\n");
   fd = socket (AF_INET,SOCK_STREAM,0);
@@ -48,7 +48,7 @@ int main(){
   if (bind(fd, (struct sockaddr *)&addr, sizeof(addr)) == -1) {
     printf("cannot bind socket\n");
   }
-
+  
   if (listen(fd, 20) == -1) {
     printf("Unable to listen\n");
   }
@@ -60,7 +60,7 @@ int main(){
     
     printf("i have said connfd to 0\n");
     int connfd=accept(fd, (struct sockaddr *) &cliaddr, &cliaddrlen);
-
+    
     printf("this the value of connfd %d \n",connfd);
     printf("connfd location of connfd%d \n", &connfd);
     if (connfd == -1) {
@@ -72,9 +72,10 @@ int main(){
     thr1 = pthread_create( &thread1, NULL, acceptConnection, (void*) &connfd);
     pthread_join( thread1, NULL);
     printf("Thread 1 returns: %d\n",thr1);
-
-    return 0;
+    
+    
   }
+  return 0;
 }
 void *acceptConnection(void *ptr){
 #define BUFLEN 1500
