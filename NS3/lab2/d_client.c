@@ -60,7 +60,7 @@ if (write(fd,data, datalen) == -1){
       printf("%c", buf[i]);
     }
     x++;
-    sleep(3);
+    sleep(1);
   }
     close(fd);
 
