@@ -118,11 +118,11 @@ void *acceptConnection(void *ptr){
 	  if (buffer){
 	    fread (buffer, 1, length, f);
 	  }
+	buffer[length]='\0';
 	  fclose (f);
 	}
-	
-	
-	char responseHead[]="HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nConnection: close\r\n\r\n";
+	char responseHead[100];
+	sprintf(responseHead,"HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length: %d\r\nConnection: close\r\n\r\n",length);
 
 
 //	printf ("Size of page is %d\n",strlen(page));
@@ -138,13 +138,15 @@ void *acceptConnection(void *ptr){
       printf ("404 not a GET request!\n");
     }      
     int datalen=strlen(data) ;
+	data[datalen]='\0';
 
     if (write(connfd,data, datalen) == -1){
       printf("Unable to write %s\n", strerror(errno));
       printf("\n");
       
     }
-  }    
+printf("finished writing\n"); 
+}    
   close(connfd);
   printf("Connection Closed\n");
   
