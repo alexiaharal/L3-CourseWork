@@ -39,7 +39,7 @@ int main(){
   addr.sin_addr.s_addr = INADDR_ANY;
   addr.sin_family = AF_INET;
   addr.sin_port = htons(8000);
-
+  
   if (bind(fd, (struct sockaddr *)&addr, sizeof(addr)) == -1) {
     printf("cannot bind socket\n");
   }
@@ -47,18 +47,18 @@ int main(){
   if (listen(fd, 20) == -1) {
     printf("Unable to listen\n");
   }
-
+  
   printf("Server is now running on port 8000\n"); 
   struct sockaddr_in cliaddr; 
   socklen_t   cliaddrlen = sizeof(cliaddr);
-
+  
   while(1){
     int connfd=accept(fd, (struct sockaddr *) &cliaddr, &cliaddrlen);
     
     if (connfd == -1) {
       printf("unable to accept\n");
     }
-
+    
     pthread_t thread1;
     int  thr1;
     thr1 = pthread_create( &thread1, NULL, acceptConnection, (void*) &connfd);
@@ -69,7 +69,7 @@ int main(){
 }
 
 void *acceptConnection(void *ptr){
-#define BUFLEN 1500
+#define BUFLEN 30000
   ssize_t rcount;
   ssize_t i;
   char buf[BUFLEN];
@@ -94,14 +94,16 @@ void *acceptConnection(void *ptr){
     //get the first word of the request
     strcpy (request, strtok (buf, "/"));
     char filename[30];
-    strcpy (filename, strtok (NULL, " "));
-    strtok (NULL, " ");		//go to next line
+	char filetype[4];
+    strcpy (filename, strtok (NULL, "."));
+	strcpy(filetype, strtok(NULL, " "));
+	sprintf(filename, "%s.%s",filename,filetype); 
+   strtok (NULL, " ");		//go to next line
     char host[30];
-   char data[1000];
-	 strcpy (host, strtok (NULL, "\r\n"));
-    printf ("Request: %s\n", request);
-    printf ("Filename: %s\n", filename);
-    printf ("Host: %s\n", host);
+    char *data=0;
+    data=malloc(BUFLEN);
+    strcpy (host, strtok (NULL, "\r\n"));
+ 
     if (strncmp (request, "GET", 3) == 0){
       int fileExists = access (filename, R_OK);
       if (fileExists == 0){
@@ -114,39 +116,111 @@ void *acceptConnection(void *ptr){
 	  fseek (f, 0, SEEK_END);
 	  length = ftell (f);
 	  fseek (f, 0, SEEK_SET);
-	  buffer = malloc (length);
+	  buffer = malloc (length+1);
 	  if (buffer){
 	    fread (buffer, 1, length, f);
 	  }
-	buffer[length]='\0';
+	  
 	  fclose (f);
 	}
-	char responseHead[100];
-	sprintf(responseHead,"HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length: %d\r\nConnection: close\r\n\r\n",length);
-
-
-//	printf ("Size of page is %d\n",strlen(page));
+	char responseHead[300];
+	char *contentType=0;
+	contentType=malloc(25);
+	if (strcmp (filetype, "html") == 0){
+	strcpy(contentType, "text/html");
+	}else if (strcmp(filetype, "htm")==0){
+	strcpy(contentType, "text/html");
+	}else if (strcmp(filetype, "gif")==0){
+	strcpy(contentType, "image/gif");
+	}else if (strcmp(filetype, "jpg")==0){
+	strcpy(contentType, "image/jpeg");
+	}else if (strcmp(filetype, "jpeg")==0){
+	strcpy(contentType, "image/jpeg");
+	}else if (strcmp(filetype, "txt")==0){
+	strcpy(contentType, "text/plain");
+	}else if (strcmp(filetype, "gif")==0){
+	strcpy(contentType, "image/gif");
+	}else{
+	strcpy(contentType, "application/octet-stream");
+	}
+	sprintf(responseHead,"HTTP/1.1 200 OK\r\nContent-Type: %s\r\nContent-Length: %d\r\nConnection: close\r\n\r\n",contentType, length);
+	printf("HTTP/1.1 200 OK\r\nContent-Type: %s\r\nContent-Length: %d\r\nConnection: close\r\n\r\n",contentType, length);
+	free(contentType);	
+	
+	//	printf ("Size of page is %d\n",strlen(page));
 	if (buffer){
 	  strcat(data,responseHead);
 	  strcat (data, buffer);
 	  free (buffer); 
-	}else{
-	  printf ("File does not exist! Send 404!");
+	}
+      }else{
+	//File does NOT exist
+	char *buffer = 0;
+	int length;
+	FILE *f = fopen ("404.html", "rb");
+	
+	if (f){
+	  fseek (f, 0, SEEK_END);
+	  length = ftell (f);
+	  fseek (f, 0, SEEK_SET);
+	  buffer = malloc (length);
+	  if (buffer){
+	    fread (buffer, 1, length, f);
+	  }
+	  buffer[length]='\0';
+	  fclose (f);
+	}
+	char responseHead[100];
+	sprintf(responseHead,"HTTP/1.1 404 Not Found\r\nContent-Type: text/h\
+tml\r\nContent-Length: %d\r\nConnection: close\r\n\r\n",length);
+	
+	       
+	if (buffer){
+	  strcat(data,responseHead);
+	  strcat (data, buffer);
+	  free (buffer);
 	}
       }
     }else{
-      printf ("404 not a GET request!\n");
-    }      
+      	char *buffer = 0;
+	int length;
+	FILE *f = fopen ("400.html", "rb");
+	
+	if (f){
+	  fseek (f, 0, SEEK_END);
+	  length = ftell (f);
+	  fseek (f, 0, SEEK_SET);
+	  buffer = malloc (length);
+	  if (buffer){
+	    fread (buffer, 1, length, f);
+	  }
+	  buffer[length]='\0';
+	  fclose (f);
+	}
+	char responseHead[100];
+	sprintf(responseHead,"HTTP/1.1 400 Bad Request\r\nContent-Type: text/h\
+tml\r\nContent-Length: %d\r\nConnection: close\r\n\r\n",length);
+	
+	
+	if (buffer){
+	  strcat(data,responseHead);
+	  strcat (data, buffer);
+	  free (buffer);
+	}
+    }
+    
     int datalen=strlen(data) ;
-	data[datalen]='\0';
-
+    data[datalen]='\0';
+    
     if (write(connfd,data, datalen) == -1){
       printf("Unable to write %s\n", strerror(errno));
       printf("\n");
       
     }
-printf("finished writing\n"); 
-}    
+    printf("finished writing\n"); 
+    free(data);
+  }
+  
   close(connfd);
   printf("Connection Closed\n");
   
@@ -155,3 +229,4 @@ printf("finished writing\n");
   return 0;
 }
 
+  
