@@ -8,29 +8,31 @@
 #include <pthread.h>
 void *acceptConnection(void *ptr);
 void getContentType(char*, char[4]);
-
+void getResponseHead(char*, char[], char[], int);
 void getContentType(char *contentType, char filetype[]){
   if (strcmp (filetype, "html") == 0){
-	strcpy(contentType, "text/html");
-	}else if (strcmp(filetype, "htm")==0){
-	strcpy(contentType, "text/html");
-	}else if (strcmp(filetype, "gif")==0){
-	strcpy(contentType, "image/gif");
-	}else if (strcmp(filetype, "jpg")==0){
-	strcpy(contentType, "image/jpeg");
-	}else if (strcmp(filetype, "jpeg")==0){
-	strcpy(contentType, "image/jpeg");
-	}else if (strcmp(filetype, "txt")==0){
-	strcpy(contentType, "text/plain");
-	}else if (strcmp(filetype, "gif")==0){
-	strcpy(contentType, "image/gif");
-	}else{
-	strcpy(contentType, "application/octet-stream");
-	}
-
+    strcpy(contentType, "text/html");
+  }else if (strcmp(filetype, "htm")==0){
+    strcpy(contentType, "text/html");
+  }else if (strcmp(filetype, "gif")==0){
+    strcpy(contentType, "image/gif");
+  }else if (strcmp(filetype, "jpg")==0){
+    strcpy(contentType, "image/jpeg");
+  }else if (strcmp(filetype, "jpeg")==0){
+    strcpy(contentType, "image/jpeg");
+  }else if (strcmp(filetype, "txt")==0){
+    strcpy(contentType, "text/plain");
+  }else if (strcmp(filetype, "gif")==0){
+    strcpy(contentType, "image/gif");
+  }else{
+    strcpy(contentType, "application/octet-stream");
+  }
 }
 
 
+void getResponseHead(char *head, char responseStatus[],char type[], int length){
+  sprintf(head,"%s\r\nContent-Type: %s\r\nContent-Length: %d\r\nConnection: close\r\n\r\n",responseStatus, type, length);
+}
 
 int main(){
   int fd;
@@ -127,12 +129,12 @@ void *acceptConnection(void *ptr){
 	  fclose (f);
 	}
 	
-	char responseHead[300];
-	char *contentType=0;
+	char *contentType;
+	char *responseHead;
 	contentType=malloc(25);
+	responseHead=malloc(300);
 	getContentType(contentType, filetype);
-	sprintf(responseHead,"HTTP/1.1 200 OK\r\nContent-Type: %s\r\nContent-Length: %d\r\nConnection: close\r\n\r\n",contentType, length);
-	printf("HTTP/1.1 200 OK\r\nContent-Type: %s\r\nContent-Length: %d\r\nConnection: close\r\n\r\n",contentType, length);
+	getResponseHead(responseHead,"HTTP/1.1 200 OK",contentType, length);
 	free(contentType);	
 	
 	//	printf ("Size of page is %d\n",strlen(page));
@@ -140,6 +142,7 @@ void *acceptConnection(void *ptr){
 	  strcat(data,responseHead);
 	  strcat (data, buffer);
 	  free (buffer); 
+		free(responseHead);
 	}
       }else{
 	//File does NOT exist
