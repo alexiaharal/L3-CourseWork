@@ -7,27 +7,30 @@
 #include <time.h>
 #include <pthread.h>
 void *acceptConnection(void *ptr);
-void getDate(char *data){
-  time_t now;
-  struct tm *datedata;
-  char date[15];
-  time(&now);
-  datedata=localtime(&now);
-  strftime(date, 15, "%d/%m/%Y\r\n", datedata);
-  strcpy(data,date);
+void getContentType(char*, char[4]);
+
+void getContentType(char *contentType, char filetype[]){
+  if (strcmp (filetype, "html") == 0){
+	strcpy(contentType, "text/html");
+	}else if (strcmp(filetype, "htm")==0){
+	strcpy(contentType, "text/html");
+	}else if (strcmp(filetype, "gif")==0){
+	strcpy(contentType, "image/gif");
+	}else if (strcmp(filetype, "jpg")==0){
+	strcpy(contentType, "image/jpeg");
+	}else if (strcmp(filetype, "jpeg")==0){
+	strcpy(contentType, "image/jpeg");
+	}else if (strcmp(filetype, "txt")==0){
+	strcpy(contentType, "text/plain");
+	}else if (strcmp(filetype, "gif")==0){
+	strcpy(contentType, "image/gif");
+	}else{
+	strcpy(contentType, "application/octet-stream");
+	}
+
 }
 
-void getTime(char *data){
-  time_t current_time;
-  struct tm * timedata;
-  char timeString[6];
-  
-  time(&current_time);
-  timedata = localtime(&current_time);
-  strftime(timeString, 8, "%H:%M\r\n", timedata);
-  strcpy(data,timeString);
-  
-}
+
 
 int main(){
   int fd;
@@ -44,7 +47,7 @@ int main(){
     printf("cannot bind socket\n");
   }
   
-  if (listen(fd, 20) == -1) {
+  if (listen(fd, 50) == -1) {
     printf("Unable to listen\n");
   }
   
@@ -116,33 +119,18 @@ void *acceptConnection(void *ptr){
 	  fseek (f, 0, SEEK_END);
 	  length = ftell (f);
 	  fseek (f, 0, SEEK_SET);
-	  buffer = malloc (length+1);
+	  buffer = malloc (length);
 	  if (buffer){
 	    fread (buffer, 1, length, f);
 	  }
 	  
 	  fclose (f);
 	}
+	
 	char responseHead[300];
 	char *contentType=0;
 	contentType=malloc(25);
-	if (strcmp (filetype, "html") == 0){
-	strcpy(contentType, "text/html");
-	}else if (strcmp(filetype, "htm")==0){
-	strcpy(contentType, "text/html");
-	}else if (strcmp(filetype, "gif")==0){
-	strcpy(contentType, "image/gif");
-	}else if (strcmp(filetype, "jpg")==0){
-	strcpy(contentType, "image/jpeg");
-	}else if (strcmp(filetype, "jpeg")==0){
-	strcpy(contentType, "image/jpeg");
-	}else if (strcmp(filetype, "txt")==0){
-	strcpy(contentType, "text/plain");
-	}else if (strcmp(filetype, "gif")==0){
-	strcpy(contentType, "image/gif");
-	}else{
-	strcpy(contentType, "application/octet-stream");
-	}
+	getContentType(contentType, filetype);
 	sprintf(responseHead,"HTTP/1.1 200 OK\r\nContent-Type: %s\r\nContent-Length: %d\r\nConnection: close\r\n\r\n",contentType, length);
 	printf("HTTP/1.1 200 OK\r\nContent-Type: %s\r\nContent-Length: %d\r\nConnection: close\r\n\r\n",contentType, length);
 	free(contentType);	
@@ -165,9 +153,9 @@ void *acceptConnection(void *ptr){
 	  fseek (f, 0, SEEK_SET);
 	  buffer = malloc (length);
 	  if (buffer){
-	    fread (buffer, 1, length, f);
-	  }
-	  buffer[length]='\0';
+	    int reads=fread (buffer, 1, length, f);
+		printf("size read is %d\n",reads);	  
+	}
 	  fclose (f);
 	}
 	char responseHead[100];
@@ -210,7 +198,7 @@ tml\r\nContent-Length: %d\r\nConnection: close\r\n\r\n",length);
     }
     
     int datalen=strlen(data) ;
-    data[datalen]='\0';
+	data[datalen]='\0';
     
     if (write(connfd,data, datalen) == -1){
       printf("Unable to write %s\n", strerror(errno));
