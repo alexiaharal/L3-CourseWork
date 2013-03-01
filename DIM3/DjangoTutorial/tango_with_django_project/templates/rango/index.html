@@ -1,8 +1,10 @@
 {% extends 'rango/base.html' %}
 
 {% block sidebar %}
-<H2>Category List</H2>
-<UL>
+
+
+<UL class="nav nav-list">
+        <LI class="nav-header">Category List</LI>
         {% if cat_list %}
                 {% for cat in cat_list %}
                         <LI><A HREF="/rango/cat/{{ cat.url }}">{{ cat.name }}</A></LI>
@@ -21,3 +23,5 @@
         <BR />
         <IMG SRC="{{ STATIC_URL}}imgs/leifos.jpg" />
 {% endblock %}
+
+

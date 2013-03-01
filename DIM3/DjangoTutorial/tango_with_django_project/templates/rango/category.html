@@ -1,4 +1,20 @@
 {% extends 'rango/base.html' %}
+{% block sidebar %}
+
+
+<UL class="nav nav-list">
+        <LI class="nav-header">Category List</LI>
+        {% if cat_list %}
+                {% for cat in cat_list %}
+                        <LI><A HREF="/rango/cat/{{ cat.url }}">{{ cat.name }}</A></LI>
+                {% endfor %}
+        {% else %}
+                <LI>No categories at present.</LI>
+        {% endif %}
+        <LI><A HREF="/rango/cat_add"> Add category</A></LI>
+</UL>
+
+{% endblock %}
 {% block content %}
 <H2>{{category_name}}</H2>
 <A HREF="/rango/page_add/{{category_name_url}}"> Add page </A>
