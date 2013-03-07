@@ -17,7 +17,7 @@ public class Dogs extends JFrame {
    private String topMother, topFather; //the mother and father names of the dog
                                         //at the top of the dogStack
    //database stuff  
-   private static final String connStr = "****** INSERT CONNECTION STRING HERE ****";
+   private static final String connStr = "jdbc:oracle:thin:L3_12_1000007n/1000007@crooked.dcs.gla.ac.uk:1521:L3";
    private static Connection conn;
    private static PreparedStatement dogInfoStmt, siblingStmt, childStmt,
                                     grandchildStmt, parentStmt, breedStmt, 
@@ -49,12 +49,12 @@ public class Dogs extends JFrame {
    private Dogs() {
       //database stuff - load driver, and then obtain connection
       try {
-	  // ************  ENTER CODE HERE TO LOAD THE DRIVER *****
+	  	Class.forName("oracle.jdbc.driver.OracleDriver");
       } catch(Exception e) {
          doError(e, "Failed to load oracle driver");
       }
       try {
-	  // *********** ENTER CODE HERE TO CONNECT TO THE DATABASE *****
+	  	conn = DriverManager.getConnection(connStr);
       } catch(Exception e) {
          doError(e, "Failure to obtain connection: " + connStr);
       }
@@ -62,7 +62,7 @@ public class Dogs extends JFrame {
       //this will form a nested query to tell us how many dogs an owner has
       //Columns should be renamed, if necessary
       //Result: ownerid, noOfDogs
-      String ownerCount = "** INSERT QUERY HERE TO GET THE NUMBER OF DOGS PER OWNER **";
+      String ownerCount = "SELECT Owner.ownerid as ownerid, COUNT(Dog.dogid) as noOfDogs FROM Dog, Owner WHERE Owner.ownerid=Dog.ownerid GROUP BY Owner.ownerid";
       
     
       //finds all the data that are single values per dog
@@ -86,7 +86,7 @@ public class Dogs extends JFrame {
       //parameterised by (1) the dog's mothername, (2) the dog's fathername and (3) the dog's 
       //own name
       //Result: name
-      String siblingQuery = "** INSERT PARAMETRISED QUERY HERE TO GET SIBLINGS **";
+      String siblingQuery = "SELECT Dog.name FROM Dog WHERE (Dog.mothername=? OR Dog.fathername=?) AND Dog.name<>?";
       
       try {
          siblingStmt = conn.prepareStatement(siblingQuery);
@@ -98,7 +98,7 @@ public class Dogs extends JFrame {
       //the query should be parametrised by (1) the dog's mothername, and (2) the dog's fathername
       //Result: name
       //Sorted by: name
-      String childQuery = "INSERT PARAMETRISED QUERY HERE TO GET CHILDREN";
+      String childQuery = "SELECT Dog.name FROM Dog WHERE Dog.mothername=? OR Dog.fathername=? ORDER BY Dog.name";
       try {
          childStmt = conn.prepareStatement(childQuery);
       } catch(SQLException e) {
@@ -109,7 +109,7 @@ public class Dogs extends JFrame {
       //in this query the current dog "?" should be D1's mother or father, and D2 should be the 
       //grandchild 
       //Result: D2.name
-      String grandchildQuery = "****** INSERT PARAMETRISED QUERY HERE TO GET GRANDCHILDREN **** ";
+      String grandchildQuery = "SELECT D2.name FROM Dog D1, Dog D2 WHERE (D2.mothername=D1.name OR D2.fathername=D1.name) AND (D1.mothername=? OR D1.fathername=? )ORDER BY D2.name";
       try {
          grandchildStmt = conn.prepareStatement(grandchildQuery);
       } catch(SQLException e) {
@@ -367,13 +367,8 @@ public class Dogs extends JFrame {
             }
       //output pedigree info
       pedInfo.setText("<html>" + dogName + "'s siblings: " + siblings + "<br>" +
-                      dogName + "'s Parents: " + 
-                      (father != null ? father : "") + 
-                      (father != null && mother != null ? ", " : "") +
-                      (mother != null ? mother : "") +
-                      " " + parentMissingInfo +
-                      "<br>" + dogName + "'s Grandparents: " + grandparents + 
-                      " " + grandparentMissingInfo +
+                      dogName + "'s Ancestors: " + 
+                       ancestors +
                       "<br>" + dogName + "'s Children: " + children + "<br>" +
                       dogName + "'s Grandchildren: " + grandchildren +
                       "<br><br>" +
@@ -475,13 +470,42 @@ public class Dogs extends JFrame {
 	if (anc == null) anc = new Vector<String>();
 
 	try {
-	    // INSERT CODE HERE TO GET ANCESTORS
+  
+		Statement motherStmt = conn.createStatement();
+        ResultSet motherRes = motherStmt.executeQuery("SELECT mothername " + 
+                                                "FROM Dog " + 
+                                                "WHERE name='"+dogname+"'");
+        if(motherRes.next()){
+        	String mother=motherRes.getString(1);
+        	if(mother!=null){
+        		System.out.println("Found "+dogname+"'s mother:"+mother);
+        		getAncestors(mother,anc);
+        		anc.add(mother);
+        	}
+        	
+        }
+        
+		Statement fatherStmt = conn.createStatement();
+        ResultSet fatherRes = fatherStmt.executeQuery("SELECT fathername " + 
+                                                "FROM Dog " + 
+                                                "WHERE name='"+dogname+"'");
+       if(fatherRes.next()){
+            String father=fatherRes.getString(1);
+			if(father!=null){
+			System.out.println("Found "+dogname+"'s father:"+father);
+        		getAncestors(father,anc);
+        		anc.add(father);
+			}
+        	       	
+        }
+
 	}
 	catch(Exception e) {
             doError(e, "Failed to execute ancestor query in getBreeding");
 	}
+	System.out.println(anc.toString());
 	return anc;
-	
+
     }
 
 
@@ -499,8 +523,7 @@ public class Dogs extends JFrame {
             doError(e, "Failed to execute ancestor query in getBreeding");
 	}
 	return anc;
-	
+
     }
 
 }
-

@@ -6,7 +6,6 @@
 #include <unistd.h>
 #include <stdlib.h> 
 #include <string.h>
-#define BUFLEN 512
 #define PORT 8000
  
 void err(char *s)
@@ -17,17 +16,19 @@ void err(char *s)
  
 int main(int argc, char** argv)
 {
-    struct sockaddr_in serv_addr;
-    int sockfd, i, slen=sizeof(serv_addr);
-    char buf[BUFLEN];
- 
+    int fd, i, slen;
+    char buffer[512];
+    int buflen = sizeof(buffer);
+ 	struct sockaddr_in serv_addr;
+ 	slen=sizeof(serv_addr);
+ 	
     if(argc != 2)
     {
       printf("Usage : %s <Server-IP>\n",argv[0]);
       exit(0);
     }
  
-    if ((sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP))==-1)
+    if ((fd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP))==-1)
         err("socket");
  
     bzero(&serv_addr, sizeof(serv_addr));
@@ -42,15 +43,15 @@ int main(int argc, char** argv)
     while(1)
     {
         printf("\nEnter data to send(Type exit and press enter to exit) : ");
-        scanf("%[^\n]",buf);
+        scanf("%[^\n]",buffer);
         getchar();
-        if(strcmp(buf,"exit") == 0)
+        if(strcmp(buffer,"exit") == 0)
           exit(0);
  
-        if (sendto(sockfd, buf, BUFLEN, 0, (struct sockaddr*)&serv_addr, slen)==-1)
+        if (sendto(fd, buffer, buflen, 0, (struct sockaddr*)&serv_addr, slen)==-1)
             err("sendto()");
     }
  
-    close(sockfd);
+    close(fd);
     return 0;
 }

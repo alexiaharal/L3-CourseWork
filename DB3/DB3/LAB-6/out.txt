@@ -1,0 +1,31 @@
+Found Alex's mother:Lasey
+Found Lasey's mother:Tilly
+Found Tilly's mother:Sake
+Found Sake's mother:Molly
+Found Molly's mother:Night
+[]
+Found Molly's father:Mabula
+[Night]
+[Night, Mabula]
+Found Sake's father:Dash
+Found Dash's father:Oswald
+[Night, Mabula, Molly]
+[Night, Mabula, Molly, Oswald]
+[Night, Mabula, Molly, Oswald, Dash]
+Found Tilly's father:Paco
+Found Paco's mother:Bobbelina
+[Night, Mabula, Molly, Oswald, Dash, Sake]
+Found Paco's father:Tango
+[Night, Mabula, Molly, Oswald, Dash, Sake, Bobbelina]
+[Night, Mabula, Molly, Oswald, Dash, Sake, Bobbelina, Tango]
+[Night, Mabula, Molly, Oswald, Dash, Sake, Bobbelina, Tango, Paco]
+Found Lasey's father:Tom
+[Night, Mabula, Molly, Oswald, Dash, Sake, Bobbelina, Tango, Paco, Tilly]
+[Night, Mabula, Molly, Oswald, Dash, Sake, Bobbelina, Tango, Paco, Tilly, Tom]
+Found Alex's father:Tuck
+Found Tuck's mother:Snel
+[Night, Mabula, Molly, Oswald, Dash, Sake, Bobbelina, Tango, Paco, Tilly, Tom, Lasey]
+Found Tuck's father:Fox
+[Night, Mabula, Molly, Oswald, Dash, Sake, Bobbelina, Tango, Paco, Tilly, Tom, Lasey, Snel]
+[Night, Mabula, Molly, Oswald, Dash, Sake, Bobbelina, Tango, Paco, Tilly, Tom, Lasey, Snel, Fox]
+[Night, Mabula, Molly, Oswald, Dash, Sake, Bobbelina, Tango, Paco, Tilly, Tom, Lasey, Snel, Fox, Tuck]
